@@ -138,9 +138,15 @@ end )
 --  config
 
 net.Receive( "GuthSCP:SetConfig", function( len, ply )
-    local title, access = net.ReadString(), net.ReadUInt( 3 )
+    local title, access = net.ReadString(), net.ReadUInt( GuthSCP.maxKeycardLevelBit )
     if not title and not access then return end
 
     ply:SetNWString( "GuthSCP:ButtonTitle", title or ply:GetNWString( "GuthSCP:ButtonTitle", "" ) )
     ply:SetNWInt( "GuthSCP:CurAccess", math.Clamp( access or ply:GetNWInt( "GuthSCP:CurAccess", 1 ), 1, GuthSCP.maxKeycardLevel ) )
+
+    --  set level to configurator
+    local weapon = ply:GetWeapon( "guthscp_keycards_config" )
+    if IsValid( weapon ) then
+        weapon.GuthSCPLVL = ply:GetNWInt( "GuthSCP:CurAccess", 1 )
+    end
 end )

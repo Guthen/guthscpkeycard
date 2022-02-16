@@ -14,3 +14,7 @@
 + **ADD** : SWEP ViewModel **Holster & Equip Animations** (**ACT_VM_DRAW** & **ACT_VM_HOLSTER**)
 + **ADD** : Add **Save & Load buttons** on Configuration SWEP's menu 
 + **ADD** : Add **Confirmation Messages** on **Save & Load** for admin players
+
+### 16/02/2022
++ **FIX** : Applying levels `+7` with the SWEP `guthscp_keycards_config` were truncated by the network optimization
++ **FIX** : Set the current level applied by the SWEP `guthscp_keycards_config` to it

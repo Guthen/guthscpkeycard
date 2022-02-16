@@ -14,6 +14,9 @@ GuthSCP.useCooldown = .8
 
 --  get max keycard level
 GuthSCP.keycardSweps = {}
+GuthSCP.maxKeycardLevel = 0
+GuthSCP.maxKeycardLevelBit = 1
+
 function GuthSCP.registerKeycardSWEP( swep, level )
     if not level then
         assert( isnumber( swep.GuthSCPLVL ), "The field 'GuthSCPLVL' of this SWEP must be a number" )
@@ -23,6 +26,7 @@ function GuthSCP.registerKeycardSWEP( swep, level )
 
     GuthSCP.keycardSweps[#GuthSCP.keycardSweps + 1] = swep
     GuthSCP.maxKeycardLevel = math.max( GuthSCP.maxKeycardLevel or 0, swep.GuthSCPLVL )
+    GuthSCP.maxKeycardLevelBit = math.ceil( math.log( GuthSCP.maxKeycardLevel + 1, 2 ) )
 
     --  hot reload
     timer.Simple( 0, function()
