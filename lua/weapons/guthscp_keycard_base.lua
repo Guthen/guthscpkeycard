@@ -85,7 +85,7 @@ SWEP.ViewModelBoneMods = {
 
 --  main functions
 function SWEP:PrimaryAttack() 
-	if not IsFirstTimePredicted() then return end
+	if CLIENT then return end
 	
 	self:SetNextPrimaryFire( CurTime() + GuthSCP.useCooldown )
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
@@ -127,6 +127,22 @@ end
 
 function SWEP:Deploy()
 	self:SendWeaponAnim( ACT_VM_DRAW )
+end
+
+function SWEP:Holster( new_weapon )
+	if self.ViewModel == "models/weapons/v_grenade.mdl" then return true end --  don't engage animation on default keycards
+	if self.HolstingDone then --  holsting once animation done
+		self.HolstingDone = false
+		return true 
+	end
+	if self.HolstingTime > CurTime() then return false end --  don't holster while animation playing
+
+	self:SendWeaponAnim( ACT_VM_HOLSTER )
+	self.HolstingTime = CurTime() + self:SequenceDuration( self:SelectWeightedSequence( ACT_VM_HOLSTER ) )
+	self.HolstingWeapon = new_weapon
+
+	self:ClearBonePositions()
+	return false
 end
 
 if CLIENT then
@@ -221,8 +237,8 @@ function SWEP:Initialize()
 		end
 	else
 		self.ViewModel = self.GuthSCPRenderer.view_model.model
-		self.UseHands = self.GuthSCPRenderer.view_model.use_hands
 	end
+	self.UseHands = self.GuthSCPRenderer.view_model.use_hands
 	
 	--  world model
 	if self.GuthSCPRenderer.world_model.swep_ck.enabled then
@@ -265,22 +281,6 @@ function SWEP:Initialize()
 		end
 
 	end
-end
-
-function SWEP:Holster( new_weapon )
-	if self.ViewModel == "models/weapons/v_grenade.mdl" then return true end --  don't engage animation on default keycards
-	if self.HolstingDone then --  holsting once animation done
-		self.HolstingDone = false
-		return true 
-	end
-	if self.HolstingTime > CurTime() then return false end --  don't holster while animation playing
-
-	self:SendWeaponAnim( ACT_VM_HOLSTER )
-	self.HolstingTime = CurTime() + self:SequenceDuration( self:SelectWeightedSequence( ACT_VM_HOLSTER ) )
-	self.HolstingWeapon = new_weapon
-
-	self:ClearBonePositions()
-	return false
 end
 
 function SWEP:OnRemove()

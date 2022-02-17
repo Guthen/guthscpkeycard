@@ -19,3 +19,10 @@
 ### 16/02/2022
 + **FIX** : Applying levels `+7` with the SWEP `guthscp_keycards_config` were truncated by the network optimization
 + **FIX** : Set the current level applied by the SWEP `guthscp_keycards_config` to it
+
+## Hot Reload & Primary Attack Animation Fixes
+### 17/02/2022
++ **FIX** : Primary Attack ViewModel animation playing only once on a dedicated server
++ **CONFIG FIX** : Hot reload with keycards editing
++ **CONFIG FIX** : `SWEP.GuthSCPRenderer.view_model.use_hands` now set `SWEP.UseHands` no matter if `SWEP.GuthSCPRenderer.view_model.swep_ck.enabled` is on `true` or `false`
++ **CODE FIX** : Prevent SWEPs duplicates in the numerical table `GuthSCP.keycardSweps`

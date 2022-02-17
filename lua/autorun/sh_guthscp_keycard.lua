@@ -12,11 +12,12 @@ GuthSCP.keycardAvailableClass =
 --  cooldown in seconds before using an accredidated door/button again
 GuthSCP.useCooldown = .8
 
---  get max keycard level
+--  auto-filled variables
 GuthSCP.keycardSweps = {}
 GuthSCP.maxKeycardLevel = 0
 GuthSCP.maxKeycardLevelBit = 1
 
+--  get max keycard level
 function GuthSCP.registerKeycardSWEP( swep, level )
     if not level then
         assert( isnumber( swep.GuthSCPLVL ), "The field 'GuthSCPLVL' of this SWEP must be a number" )
@@ -24,16 +25,26 @@ function GuthSCP.registerKeycardSWEP( swep, level )
         swep.GuthSCPLVL = level
     end
 
-    GuthSCP.keycardSweps[#GuthSCP.keycardSweps + 1] = swep
-    GuthSCP.maxKeycardLevel = math.max( GuthSCP.maxKeycardLevel or 0, swep.GuthSCPLVL )
-    GuthSCP.maxKeycardLevelBit = math.ceil( math.log( GuthSCP.maxKeycardLevel + 1, 2 ) )
+    --  register swep
+    if not table.HasValue( GuthSCP.keycardSweps, swep ) then
+        GuthSCP.keycardSweps[#GuthSCP.keycardSweps + 1] = swep
+        GuthSCP.maxKeycardLevel = math.max( GuthSCP.maxKeycardLevel or 0, swep.GuthSCPLVL )
+        GuthSCP.maxKeycardLevelBit = math.ceil( math.log( GuthSCP.maxKeycardLevel + 1, 2 ) )
+    end
 
     --  hot reload
-    timer.Simple( 0, function()
-        for i, v in ipairs( ents.FindByClass( swep.Folder:gsub( "weapons/", "" ) ) ) do
-            v:Initialize()
-        end
-    end )
+    if SERVER then
+        timer.Simple( 0, function()
+            for i, v in ipairs( ents.FindByClass( swep.Folder:gsub( "weapons/", "" ) ) ) do
+                local ply = v:GetOwner()
+                if not IsValid( ply ) then continue end
+
+                ply:StripWeapon( v:GetClass() )
+                ply:Give( v:GetClass() )
+                ply:SelectWeapon( v:GetClass() )
+            end
+        end )
+    end
 end
 
 hook.Add( "StartCommand", "GuthSCP:HolsterAnimation", function( ply, ucmd )
