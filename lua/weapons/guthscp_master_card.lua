@@ -30,7 +30,7 @@ SWEP.GuthSCPRenderer = {
     --  World Model is a 3D model shown either in 3rd person or when looking to an other player 
     world_model = {
         --model = "models/keycard/card_v1/card_snowseazon.mdl", --  model path
-        skin = 12, --  skin index
+        skin = 12, --  skin index  --  1000shells is Skin 1
         --  SWEP:Construction Kit's renderer allow to render additional models without these models being weapon models
         --[[ swep_ck = {
             enabled = true, 
@@ -52,11 +52,11 @@ SWEP.GuthSCPRenderer = {
     --  View Model is a 3D model specially made to be use with a weapon which is shown in 1st person 
     view_model = {
         --model = "models/1000shells/scp/keycards/v_keycard.mdl",
-        skin = 12, --  skin index
+        skin = 12, --  skin index  --  1000shells is Skin 6
         --use_hands = true, --  if hands should be drawn
         --  SWEP:Construction Kit's renderer allow to render additional models without these models being weapon models
         --[[ swep_ck = {
-            enabled = true,
+            enabled = true, --  disable this if you're using a view model (e.g.: 1000shells)
 
             --  commenting options below will revert the values to base weapon values
             bone = "ValveBiped.Bip01_R_Finger0", --  bone attachment
