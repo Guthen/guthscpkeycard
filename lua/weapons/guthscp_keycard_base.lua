@@ -88,7 +88,6 @@ function SWEP:PrimaryAttack()
 	if CLIENT then return end
 	
 	self:SetNextPrimaryFire( CurTime() + GuthSCP.useCooldown )
-	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 
 	--  interact with entities (+use)
 	if SERVER then

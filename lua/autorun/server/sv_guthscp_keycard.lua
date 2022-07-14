@@ -109,6 +109,10 @@ hook.Add( "PlayerUse", "GuthSCP:PlayerUse", function( ply, ent )
     --  use cooldown
     ply.guthscp_last_use_time = CurTime() + GuthSCP.useCooldown
 
+    --  play weapon animation
+    if weapon.Base == "guthscp_keycard_base" then
+	    weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
+    end
 
     --  refuse access
     if not ply_level then
