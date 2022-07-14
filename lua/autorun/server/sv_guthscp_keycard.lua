@@ -94,36 +94,41 @@ end )
 
 --  hooks
 hook.Add( "PlayerUse", "GuthSCP:PlayerUse", function( ply, ent )
-    if GuthSCP.keycardAvailableClass[ent:GetClass()] then --  it's an keycard available class
-        if not IsValid( ent ) or not IsValid( ply ) then return end
-        if ply.guthscp_last_use_time and ply.guthscp_last_use_time > CurTime() then return false end
+    if not IsValid( ent ) or not IsValid( ply ) then return end  --  are they valid?
+    if not GuthSCP.keycardAvailableClass[ent:GetClass()] then return end  --  it is a keycard compatible entity class?
+    if ply.guthscp_last_use_time and ply.guthscp_last_use_time > CurTime() then return false end  --  check cooldown
 
-        local entLVL = ent:GetNWInt( "GuthSCP:LVL", 0 )
-        if not entLVL or entLVL == 0 then return end --  no lvl :(
+    local ent_level = ent:GetNWInt( "GuthSCP:LVL", 0 )
+    if ent_level <= 0 then return end  --  no level :(
 
-        --  use cooldown
-        ply.guthscp_last_use_time = CurTime() + GuthSCP.useCooldown
+    --  get player accreditation
+    local weapon = ply:GetActiveWeapon()
+    if not IsValid( weapon ) then return end
+    local ply_level = weapon.GuthSCPLVL
+        
+    --  use cooldown
+    ply.guthscp_last_use_time = CurTime() + GuthSCP.useCooldown
 
-        --  refuse access
-        local plyLVL = ply:GetActiveWeapon().GuthSCPLVL
-        if not plyLVL then
-            --  not a lvl weapon
-            ply:EmitSound( "guthen_scp/interact/KeycardUse2.ogg" )
-            ply:setBottomMessage( "You don't have any keycard to pass !" )
 
-            return false
-        elseif plyLVL < entLVL then
-            --  no suffisant clearance
-            ply:EmitSound( "guthen_scp/interact/KeycardUse2.ogg" )
-            ply:setBottomMessage( "You need a keycard LVL " .. entLVL .. " to trigger the doors !" )
+    --  refuse access
+    if not ply_level then
+        --  not a level weapon
+        ply:EmitSound( "guthen_scp/interact/KeycardUse2.ogg" )
+        ply:setBottomMessage( "You don't have any keycard to pass !" )
 
-            return false
-        end
+        return false
+    elseif ply_level < ent_level then
+        --  no suffisant clearance
+        ply:EmitSound( "guthen_scp/interact/KeycardUse2.ogg" )
+        ply:setBottomMessage( "You need a keycard LVL " .. ent_level .. " to trigger the doors !" )
 
-        --  good, he has passed all conditions, what haxor he is
-        ply:EmitSound( "guthen_scp/interact/KeycardUse1.ogg" )
-        ply:setBottomMessage( "The doors are moving !" )
+        return false
     end
+
+    --  good, he has passed all conditions, what haxor he is
+    ply:EmitSound( "guthen_scp/interact/KeycardUse1.ogg" )
+    ply:setBottomMessage( "The doors are moving !" )
+    return true
 end )
 
 hook.Add( "PostCleanupMap", "GuthSCP:PostCleanupMap", function()
