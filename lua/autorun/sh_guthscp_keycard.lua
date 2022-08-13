@@ -32,6 +32,11 @@ function GuthSCP.registerKeycardSWEP( swep, level )
         GuthSCP.maxKeycardLevelBit = math.ceil( math.log( GuthSCP.maxKeycardLevel + 1, 2 ) )
     end
 
+    --  add to spawnmenu
+    if CLIENT and guthscp then
+	    guthscp.spawnmenu.add_weapon( swep, "Keycards" )
+    end
+
     --  hot reload
     if SERVER then
         timer.Simple( 0, function()

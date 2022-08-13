@@ -73,3 +73,8 @@ SWEP.GuthSCPRenderer = {
         }, ]]
     },
 }
+
+--  add to spawnmenu
+if CLIENT and guthscp then
+    guthscp.spawnmenu.add_weapon( SWEP, "Keycards" )
+end
