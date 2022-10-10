@@ -62,4 +62,4 @@ SWEP.GuthSCPRenderer = {
 }
 
 --  register swep
-GuthSCP.registerKeycardSWEP( SWEP )
+guthscp.modules.guthscpkeycard.register_keycard_swep( SWEP )

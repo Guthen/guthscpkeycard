@@ -3,7 +3,7 @@ SWEP.Base = "guthscp_keycard_base"
 
 --  main informations
 SWEP.PrintName = "SCP - Keycard LVL 4"
-SWEP.Category = "GuthSCP"
+SWEP.Category = "guthscp"
 SWEP.Author	= "Guthen"
 SWEP.Instructions = "You have clearance level four."
 
@@ -64,4 +64,4 @@ SWEP.GuthSCPRenderer = {
 ]]
 
 --  register swep
-GuthSCP.registerKeycardSWEP( SWEP )
+guthscp.modules.guthscpkeycard.register_keycard_swep( SWEP )

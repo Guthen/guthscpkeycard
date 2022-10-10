@@ -1,3 +1,7 @@
+local guthscpkeycard = guthscp.modules.guthscpkeycard
+local config = guthscp.configs.guthscpkeycard
+
+
 SWEP.PrintName			    = "SCP - Keycard Config"
 SWEP.Category				= "GuthSCP"
 SWEP.Author			        = "Guthen"
@@ -29,49 +33,59 @@ SWEP.ViewModel			    = "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel			    = "models/weapons/w_stunbaton.mdl"
 
 --SWEP.GuthSCPLVL       = 5   --  see at end of file
-SWEP.canReload = true
+SWEP.can_reload = true
 
-function SWEP:PrimaryAttack() -- add access
+--  add access
+function SWEP:PrimaryAttack()
     if CLIENT then return end
 
     local ply = self:GetOwner()
     if not IsValid( ply ) or not ply:Alive() then return end
 
-    self.Weapon:SetNextPrimaryFire( CurTime() + 1 )
+    --  cooldown
+    self:SetNextPrimaryFire( CurTime() + 1 )
 
+    --  check compatible entity
     local ent = ply:GetEyeTrace().Entity
-    if not IsValid( ent ) or not GuthSCP.keycardAvailableClass[ent:GetClass()] then return end
+    if not IsValid( ent ) or not config.keycard_available_classes[ent:GetClass()] then return end
 
-    ent:SetNWInt( "GuthSCP:LVL", ply:GetNWInt( "GuthSCP:CurAccess", 1 ) ) -- set
-    ent:SetNWString( "GuthSCP:Title", ply:GetNWString( "GuthSCP:ButtonTitle", "" ) )
+    --  setup data
+    ent:SetNWInt( "guthscpkeycard:level", ply:GetNWInt( "guthscpkeycard:config_level", 1 ) ) -- set
+    ent:SetNWString( "guthscpkeycard:title", ply:GetNWString( "guthscpkeycard:config_title", "" ) )
 
-    if SERVER then -- SERVER only because CLIENT spam chat
-        ply:ChatPrint( "GuthSCP - The target has been set on LVL " .. ent:GetNWInt( "GuthSCP:LVL", 0 ) )
+    --  notify
+    if SERVER then
+        ply:ChatPrint( "guthscp - The target has been set on LVL " .. ent:GetNWInt( "guthscpkeycard:level", 0 ) )
     end
 end
 
-function SWEP:SecondaryAttack() -- remove access
+--  remove access
+function SWEP:SecondaryAttack()
     if CLIENT then return end
 
     local ply = self:GetOwner()
     if not IsValid( ply ) or not ply:Alive() then return end
 
-    self.Weapon:SetNextSecondaryFire( CurTime() + 1 )
+    --  cooldown
+    self:SetNextSecondaryFire( CurTime() + 1 )
 
+    --  check compatible entity
     local ent = ply:GetEyeTrace().Entity
-    if not IsValid( ent ) or not GuthSCP.keycardAvailableClass[ent:GetClass()] then return end
+    if not IsValid( ent ) or not config.keycard_available_classes[ent:GetClass()] then return end
 
-    ent:SetNWInt( "GuthSCP:LVL", 0 ) -- erased
-    ent:SetNWString( "GuthSCP:Title", "" )
+    --  erase data
+    ent:SetNWInt( "guthscpkeycard:level", 0 )
+    ent:SetNWString( "guthscpkeycard:title", "" )
 
-    if SERVER then -- SERVER only because CLIENT spam chat
-        ply:ChatPrint( "GuthSCP - The target's LVL has been erased !" )
+    --  notify
+    if SERVER then
+        ply:ChatPrint( "guthscp - The target's LVL has been erased !" )
     end
 end
 
 function SWEP:Reload()
     if not CLIENT then return end
-    if not self.canReload then return end
+    if not self.can_reload then return end
 
     local ply = self:GetOwner()
     if not IsValid( ply ) or not ply:Alive() then return end
@@ -85,7 +99,7 @@ function SWEP:Reload()
     frame:SetSize( w, h )
     frame:DockPadding( left_margin, left_margin * 2, 0, left_margin * .75 )
     frame:Center()
-    frame:SetTitle( "GuthSCP - Configuration" )
+    frame:SetTitle( "GuthSCP Keycard - Configuration" )
     frame:MakePopup()
 
     --  settings label
@@ -106,7 +120,7 @@ function SWEP:Reload()
     local title_entry = text_panel:Add( "DTextEntry" )
     title_entry:Dock( FILL )
     title_entry:DockMargin( left_margin * 2, 0, left_margin * 2, 0 )
-    title_entry:SetValue( ply:GetNWString( "GuthSCP:ButtonTitle" ) )
+    title_entry:SetValue( ply:GetNWString( "guthscpkeycard:config_title" ) )
     title_entry:SetPlaceholderText( "Title of the button (optional)" )
 
     --  accreditation slider
@@ -114,9 +128,9 @@ function SWEP:Reload()
     access_slider:Dock( TOP )
     access_slider:DockMargin( left_margin, 0, 0, 0 )
     access_slider:SetText( "Accreditation ID:" )
-    access_slider:SetMinMax( 1, GuthSCP.maxKeycardLevel )
+    access_slider:SetMinMax( 1, guthscpkeycard.max_keycard_level )
     access_slider:SetDecimals( 0 )
-    access_slider:SetValue( ply:GetNWInt( "GuthSCP:CurAccess", 1 ) )
+    access_slider:SetValue( ply:GetNWInt( "guthscpkeycard:config_level", 1 ) )
 
     --  apply button
     local apply_button = frame:Add( "DButton" )
@@ -124,9 +138,9 @@ function SWEP:Reload()
     apply_button:DockMargin( 0, left_margin * .5, left_margin, 0 )
     apply_button:SetText( "Apply" )
     function apply_button:DoClick()
-        net.Start( "GuthSCP:SetConfig" )
+        net.Start( "guthscpkeycard:config" )
             net.WriteString( title_entry:GetValue() )
-            net.WriteUInt( access_slider.TextArea:GetValue(), GuthSCP.maxKeycardLevelBit ) --  textarea provides the shown value on slider instead of clamped one
+            net.WriteUInt( access_slider.TextArea:GetValue(), guthscpkeycard.max_keycard_level_bit ) --  textarea provides the shown value on slider instead of clamped one
         net.SendToServer()
     end
 
@@ -141,9 +155,7 @@ function SWEP:Reload()
     save_button:DockMargin( 0, left_margin * .5, left_margin, 0 )
     save_button:SetText( "Save keycards accesses" )
     function save_button:DoClick()
-        net.Start( "GuthSCP:Do" )
-            net.WriteBool( true )
-        net.SendToServer()
+        RunConsoleCommand( "guthscp_keycards_save" )
     end
 
     local load_button = frame:Add( "DButton" )
@@ -151,9 +163,7 @@ function SWEP:Reload()
     load_button:DockMargin( 0, left_margin * .5, left_margin, 0 )
     load_button:SetText( "Load keycards accesses" )
     function load_button:DoClick()
-        net.Start( "GuthSCP:Do" )
-            net.WriteBool( false )
-        net.SendToServer()
+        RunConsoleCommand( "guthscp_keycards_load" )
     end
 
     --  adjust frame size
@@ -161,10 +171,10 @@ function SWEP:Reload()
     frame:SizeToChildren( false, true )
 
     --  handle reload timer
-    self.canReload = false
+    self.can_reload = false
     timer.Simple( .2, function() 
         if not IsValid( self ) then return end
-        self.canReload = true 
+        self.can_reload = true 
     end )
 end
 
@@ -172,17 +182,17 @@ function SWEP:DrawHUD()
     local ply = self:GetOwner()
     if not IsValid( ply ) or not ply:Alive() then return end
 
-    draw.SimpleText( "Current Title: " .. ply:GetNWString( "GuthSCP:ButtonTitle", "nil" ), "DermaDefault", ScrW() / 2 + 50, ScrH() / 2 - 15, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
-    draw.SimpleText( "Current LVL: " .. ply:GetNWInt( "GuthSCP:CurAccess", 1 ), "DermaDefault", ScrW() / 2 + 50, ScrH() / 2, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
+    draw.SimpleText( "Current Title: " .. ply:GetNWString( "guthscpkeycard:config_title", "N/A" ), "DermaDefault", ScrW() / 2 + 50, ScrH() / 2 - 15, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
+    draw.SimpleText( "Current LVL: " .. ply:GetNWInt( "guthscpkeycard:config_level", 1 ), "DermaDefault", ScrW() / 2 + 50, ScrH() / 2, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
 
     local trg = ply:GetEyeTrace().Entity
     if not IsValid( trg ) then return end
-    if not GuthSCP.keycardAvailableClass[ trg:GetClass() ] then return end
 
-    draw.SimpleText( "Target Class: " .. trg:GetClass() or "nil", "DermaDefault", ScrW() / 2 + 50, ScrH() / 2 + 15, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
-    if trg:GetNWInt( "GuthSCP:LVL", 0 ) then
-        draw.SimpleText( "Target LVL: " .. trg:GetNWInt( "GuthSCP:LVL", 0 ), "DermaDefault", ScrW() / 2 + 50, ScrH() / 2 + 30, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
-    end
+    local is_compatible = config.keycard_available_classes[trg:GetClass()]
+    local color = is_compatible and color_white or Color( 222, 27, 27 )
+
+    draw.SimpleText( "Target Class: " .. trg:GetClass() or "nil", "DermaDefault", ScrW() / 2 + 50, ScrH() / 2 + 15, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
+    draw.SimpleText( "Target LVL: " .. trg:GetNWInt( "guthscpkeycard:level", 0 ), "DermaDefault", ScrW() / 2 + 50, ScrH() / 2 + 30, color, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
 end
 
-GuthSCP.registerKeycardSWEP( SWEP, 5 )
+guthscp.modules.guthscpkeycard.register_keycard_swep( SWEP, 5 )

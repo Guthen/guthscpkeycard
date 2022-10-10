@@ -12,8 +12,8 @@ There are **8 weapons** including **6 keycards** (LVL 1, 2, 3, 4, 5 and Omni), *
 With the **keycard editor**, you can change the current settings by pressing **Reload** key (basically 'R'), a panel will open on your screen. 
 
 ### Console Commands
-+ `guthscp_save_keycards` : to save the data after edit the buttons with the keycard editor
-+ `guthscp_load_keycards` : to load the data (but it is done automatically, so ignore it)
++ `guthscp_keycards_save` : to save the data after edit the buttons with the keycard editor
++ `guthscp_keycards_load` : to load the data (but it is done automatically, so ignore it)
 
 The keycards data is loaded when a server reboot and after a cleanup.
 

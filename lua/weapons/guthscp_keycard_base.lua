@@ -87,7 +87,7 @@ SWEP.ViewModelBoneMods = {
 function SWEP:PrimaryAttack() 
 	if CLIENT then return end
 	
-	self:SetNextPrimaryFire( CurTime() + GuthSCP.useCooldown )
+	self:SetNextPrimaryFire( CurTime() + guthscp.configs.guthscpkeycard.use_cooldown )
 
 	--  interact with entities (+use)
 	if SERVER then
