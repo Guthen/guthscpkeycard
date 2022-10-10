@@ -93,38 +93,54 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 	local ent_level = ent:GetNWInt( "guthscpkeycard:level", 0 )
 	if ent_level <= 0 then return end  --  no level :(
 
-	--  check weapon
-	local weapon = ply:GetActiveWeapon()
-	if not IsValid( weapon ) then return end
-
-	--  get player level
-	local ply_level = weapon.GuthSCPLVL
-		
+	--  get active weapon
+	local active_weapon = ply:GetActiveWeapon()
+	if not IsValid( active_weapon ) then return end
+	
+	--  get weapon level
+	local ply_level = 0
+	local weapon = NULL
+	if not active_weapon.GuthSCPLVL or active_weapon.GuthSCPLVL == 0 then
+		if not config.use_only_active_keycard then
+			--  get higher level in inventory
+			for i, v in ipairs( ply:GetWeapons() ) do
+				if not v.GuthSCPLVL or ply_level >= v.GuthSCPLVL then continue end
+				
+				weapon = v
+				ply_level = v.GuthSCPLVL
+			end
+		end
+	else
+		--  get active weapon
+		weapon = active_weapon
+		ply_level = weapon.GuthSCPLVL
+	end
+	
 	--  set cooldown
-	ply.guthscp_last_use_time = CurTime() + guthscp.configs.guthscpkeycard.use_cooldown
-
+	ply.guthscp_last_use_time = CurTime() + config.use_cooldown
+	
 	--  play weapon animation
-	if weapon.Base == "guthscp_keycard_base" then
+	if weapon == active_weapon and weapon.Base == "guthscp_keycard_base" then
 		weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	end
-
+	
 	--  refuse access
-	if not ply_level then
+	if ply_level == 0 then
 		--  not a level weapon
-		ply:EmitSound( guthscp.configs.guthscpkeycard.sound_denied )
+		ply:EmitSound( config.sound_denied )
 		guthscp.player_message( ply, "You don't have any keycard to pass !" )
 
 		return false
 	elseif ply_level < ent_level then
 		--  no suffisant clearance
-		ply:EmitSound( guthscp.configs.guthscpkeycard.sound_denied )
+		ply:EmitSound( config.sound_denied )
 		guthscp.player_message( ply, "You need a keycard LVL " .. ent_level .. " to trigger the doors !" )
 
 		return false
 	end
 
 	--  good, he has passed all conditions, what haxor he is
-	ply:EmitSound( guthscp.configs.guthscpkeycard.sound_accepted )
+	ply:EmitSound( config.sound_accepted )
 	guthscp.player_message( ply, "The doors are moving !" )
 
 	return true

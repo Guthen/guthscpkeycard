@@ -24,6 +24,13 @@ MODULE.menu = {
 				name = "General",
 			},
 			{
+				type = "CheckBox",
+				name = "Use only Active Keycard",
+				id = "use_only_active_keycard",
+				desc = "If checked, only the active keycard weapon is used. Otherwise, the active keycard will be used in priority but, if any, the higher keycard in the inventory will be used.",
+				default = true,
+			},
+			{
 				type = "NumWang",
 				name = "Use Cooldown",
 				id = "use_cooldown",
