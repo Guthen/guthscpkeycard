@@ -25,6 +25,13 @@ MODULE.menu = {
 			},
 			{
 				type = "CheckBox",
+				name = "Droppable Keycards",
+				id = "droppable_keycards",
+				desc = "If checked, keycards can be dropped with a right click while holding them",
+				default = true,
+			},
+			{
+				type = "CheckBox",
 				name = "Use only Active Keycard",
 				id = "use_only_active_keycard",
 				desc = "If checked, only the active keycard weapon is used. Otherwise, the active keycard will be used in priority but, if any, the higher keycard in the inventory will be used.",

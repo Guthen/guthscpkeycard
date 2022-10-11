@@ -102,10 +102,7 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-local convar_drop
 if SERVER then
-	convar_drop = CreateConVar( "guthen_scp_keycard_secondary_drop", "1", { FCVAR_ARCHIVE, FCVAR_LUA_SERVER }, "Enables the keycard's SWEPs to be dropped on right click" )
-
 	--  setup correct model & skin of dropped entity using /drop 
 	hook.Add( "onDarkRPWeaponDropped", "guthscpkeycard:dropmodel", function( ply, ent, weapon )
 		if not ( weapon.Base == "guthscp_keycard_base" ) then return end
@@ -119,7 +116,7 @@ function SWEP:SecondaryAttack()
 	if CLIENT then return end
 	
 	--  drop weapon
-	if convar_drop:GetBool() then
+	if guthscp.configs.guthscpkeycard.droppable_keycards then
 		self:GetOwner():DropWeapon()
 	end
 end
