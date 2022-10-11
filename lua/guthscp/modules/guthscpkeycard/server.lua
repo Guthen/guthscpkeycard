@@ -101,7 +101,7 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 	local ply_level = 0
 	local weapon = NULL
 	if not active_weapon.GuthSCPLVL or active_weapon.GuthSCPLVL == 0 then
-		if not config.use_only_active_keycard then
+		if not config.use_only_selected_keycard then
 			--  get higher level in inventory
 			for i, v in ipairs( ply:GetWeapons() ) do
 				if not v.GuthSCPLVL or ply_level >= v.GuthSCPLVL then continue end
