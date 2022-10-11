@@ -55,6 +55,32 @@ MODULE.menu = {
 					return k
 				end,
 			},
+			--  translations
+			{
+				type = "Category",
+				name = "Translations",
+			},
+			{
+				type = "TextEntry",
+				name = "Accepted",
+				id = "translation_accepted",
+				desc = "Text shown to the player whose access was accepted",
+				default = "The doors are moving!",
+			},
+			{
+				type = "TextEntry",
+				name = "No Keycard",
+				id = "translation_no_keycard",
+				desc = "Text shown to the player whose access was denied because he doesn't have a keycard",
+				default = "You don't have any keycard to pass !",
+			},
+			{
+				type = "TextEntry",
+				name = "Insufficient Clearance",
+				id = "translation_insufficient_clearance",
+				desc = "Text shown to the player whose access was denied because he doesn't have a sufficient clearance keycard. Available arguments: '{level}'",
+				default = "You need a keycard LVL {level} to trigger the doors !",
+			},
 			--  sounds
 			{
 				type = "Category",

@@ -128,20 +128,28 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 	if ply_level == 0 then
 		--  not a level weapon
 		ply:EmitSound( config.sound_denied )
-		guthscp.player_message( ply, "You don't have any keycard to pass !" )
+		guthscp.player_message( ply, config.translation_no_keycard )
 
 		return false
 	elseif ply_level < ent_level then
 		--  no suffisant clearance
 		ply:EmitSound( config.sound_denied )
-		guthscp.player_message( ply, "You need a keycard LVL " .. ent_level .. " to trigger the doors !" )
+		guthscp.player_message( 
+			ply, 
+			guthscp.helpers.format_message( 
+				config.translation_insufficient_clearance, 
+				{
+					level = ent_level,
+				} 
+			) 
+		)
 
 		return false
 	end
 
 	--  good, he has passed all conditions, what haxor he is
 	ply:EmitSound( config.sound_accepted )
-	guthscp.player_message( ply, "The doors are moving !" )
+	guthscp.player_message( ply, config.translation_accepted )
 
 	return true
 end )
