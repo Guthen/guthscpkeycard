@@ -3,9 +3,9 @@ local config = guthscp.configs.guthscpkeycard
 
 
 --  auto-filled variables
-guthscpkeycard.keycard_sweps = {}
-guthscpkeycard.max_keycard_level = 0
-guthscpkeycard.NET_KEYCARD_LEVEL_UBITS = 1
+guthscpkeycard.keycard_sweps = guthscpkeycard.keycard_sweps or {}
+guthscpkeycard.max_keycard_level = guthscpkeycard.max_keycard_level or 0
+guthscpkeycard.NET_KEYCARD_LEVEL_UBITS = guthscpkeycard.NET_KEYCARD_LEVEL_UBITS or 1
 
 --  get max keycard level
 function guthscpkeycard.register_keycard_swep( swep, level )
