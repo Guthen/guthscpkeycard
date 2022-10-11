@@ -158,7 +158,7 @@ end )
 net.Receive( "guthscpkeycard:config", function( len, ply )
 	if not ply:IsSuperAdmin() then return end
 
-	local title, access = net.ReadString(), net.ReadUInt( guthscpkeycard.max_keycard_level_bit )
+	local title, access = net.ReadString(), net.ReadUInt( guthscpkeycard.NET_KEYCARD_LEVEL_UBITS )
 	if not title and not access then return end
 
 	ply:SetNWString( "guthscpkeycard:config_title", title or ply:GetNWString( "guthscpkeycard:config_title", "" ) )

@@ -140,7 +140,7 @@ function SWEP:Reload()
     function apply_button:DoClick()
         net.Start( "guthscpkeycard:config" )
             net.WriteString( title_entry:GetValue() )
-            net.WriteUInt( access_slider.TextArea:GetValue(), guthscpkeycard.max_keycard_level_bit ) --  textarea provides the shown value on slider instead of clamped one
+            net.WriteUInt( access_slider.TextArea:GetValue(), guthscpkeycard.NET_KEYCARD_LEVEL_UBITS ) --  textarea provides the shown value on slider instead of clamped one
         net.SendToServer()
     end
 

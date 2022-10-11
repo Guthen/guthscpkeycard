@@ -5,7 +5,7 @@ local config = guthscp.configs.guthscpkeycard
 --  auto-filled variables
 guthscpkeycard.keycard_sweps = {}
 guthscpkeycard.max_keycard_level = 0
-guthscpkeycard.max_keycard_level_bit = 1
+guthscpkeycard.NET_KEYCARD_LEVEL_UBITS = 1
 
 --  get max keycard level
 function guthscpkeycard.register_keycard_swep( swep, level )
@@ -19,7 +19,7 @@ function guthscpkeycard.register_keycard_swep( swep, level )
 	if not table.HasValue( guthscpkeycard.keycard_sweps, swep ) then
 		guthscpkeycard.keycard_sweps[#guthscpkeycard.keycard_sweps + 1] = swep
 		guthscpkeycard.max_keycard_level = math.max( guthscpkeycard.max_keycard_level or 0, swep.GuthSCPLVL )
-		guthscpkeycard.max_keycard_level_bit = math.ceil( math.log( guthscpkeycard.max_keycard_level + 1, 2 ) )
+		guthscpkeycard.NET_KEYCARD_LEVEL_UBITS = guthscp.helpers.number_of_ubits( guthscpkeycard.max_keycard_level )
 	end
 
 	--  add to spawnmenu
