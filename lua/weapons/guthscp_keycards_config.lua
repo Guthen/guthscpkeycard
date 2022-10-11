@@ -50,13 +50,11 @@ function SWEP:PrimaryAttack()
     if not IsValid( ent ) or not config.keycard_available_classes[ent:GetClass()] then return end
 
     --  setup data
-    ent:SetNWInt( "guthscpkeycard:level", ply:GetNWInt( "guthscpkeycard:config_level", 1 ) ) -- set
+    ent:SetNWInt( "guthscpkeycard:level", ply:GetNWInt( "guthscpkeycard:config_level", 1 ) )
     ent:SetNWString( "guthscpkeycard:title", ply:GetNWString( "guthscpkeycard:config_title", "" ) )
 
     --  notify
-    if SERVER then
-        ply:ChatPrint( "guthscp - The target has been set on LVL " .. ent:GetNWInt( "guthscpkeycard:level", 0 ) )
-    end
+    ply:ChatPrint( "guthscp - The target has been set on LVL " .. ent:GetNWInt( "guthscpkeycard:level", 0 ) )
 end
 
 --  remove access
@@ -78,9 +76,7 @@ function SWEP:SecondaryAttack()
     ent:SetNWString( "guthscpkeycard:title", "" )
 
     --  notify
-    if SERVER then
-        ply:ChatPrint( "guthscp - The target's LVL has been erased !" )
-    end
+    ply:ChatPrint( "guthscp - The target's LVL has been erased !" )
 end
 
 function SWEP:Reload()
