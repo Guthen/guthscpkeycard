@@ -1,3 +1,5 @@
+if not guthscp then return end
+
 --  base
 SWEP.Base = "guthscp_keycard_base"
 

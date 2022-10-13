@@ -1,3 +1,8 @@
+if not guthscp then
+	error( "guthscpkeycard - fatal error! https://github.com/Guthen/guthscpbase must be installed on the server!" )
+	return
+end
+
 SWEP.PrintName = "SCP - Keycard Base"
 SWEP.Category = "GuthSCP"
 SWEP.Author	= "Guthen"

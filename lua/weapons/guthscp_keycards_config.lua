@@ -1,3 +1,5 @@
+if not guthscp then return end
+
 local guthscpkeycard = guthscp.modules.guthscpkeycard
 local config = guthscp.configs.guthscpkeycard
 
