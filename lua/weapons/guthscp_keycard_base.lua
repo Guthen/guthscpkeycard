@@ -241,7 +241,7 @@ function SWEP:Initialize()
 	end
 
 	--  hands
-	if self.GuthSCPRenderer.view_model.use_hands then
+	if not ( self.GuthSCPRenderer.view_model.use_hands == nil ) then
 		self.UseHands = self.GuthSCPRenderer.view_model.use_hands
 	end
 
