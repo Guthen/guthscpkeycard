@@ -55,7 +55,7 @@ SWEP.GuthSCPRenderer = {
     view_model = {
         --model = "models/1000shells/scp/keycards/v_keycard.mdl",
         skin = 12, --  skin index  --  1000shells is Skin 6
-        --use_hands = true, --  if hands should be drawn
+        use_hands = true, --  if hands should be drawn
         --  SWEP:Construction Kit's renderer allow to render additional models without these models being weapon models
         --[[ swep_ck = {
             enabled = true, --  disable this if you're using a view model (e.g.: 1000shells)

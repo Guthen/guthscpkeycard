@@ -29,12 +29,12 @@ SWEP.SlotPos = 2
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
 
-SWEP.ViewModel = "models/weapons/v_grenade.mdl"
+SWEP.ViewModel = "models/weapons/c_grenade.mdl"
 SWEP.WorldModel	= "models/weapons/w_grenade.mdl"
 
 SWEP.HoldType = "slam"
 
-SWEP.UseHands = false
+SWEP.UseHands = true
 SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
 
@@ -239,8 +239,12 @@ function SWEP:Initialize()
 	else
 		self.ViewModel = self.GuthSCPRenderer.view_model.model
 	end
-	self.UseHands = self.GuthSCPRenderer.view_model.use_hands
-	
+
+	--  hands
+	if self.GuthSCPRenderer.view_model.use_hands then
+		self.UseHands = self.GuthSCPRenderer.view_model.use_hands
+	end
+
 	--  world model
 	if self.GuthSCPRenderer.world_model.swep_ck.enabled then
 		table.Merge( self.WElements["keycard"], self.GuthSCPRenderer.world_model.swep_ck or {} )
