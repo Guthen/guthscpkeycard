@@ -9,8 +9,8 @@ util.AddNetworkString( "guthscpkeycard:io" )
 function guthscpkeycard.save( ply )
 	--  serialize
 	local data = {}
-	for k, _ in pairs( config.keycard_available_classes ) do
-		for _, v in ipairs( ents.FindByClass( k ) ) do -- add data to a table
+	for class in pairs( config.keycard_available_classes ) do
+		for i, v in ipairs( ents.FindByClass( class ) ) do -- add data to a table
 			if v:GetNWInt( "guthscpkeycard:level", 0 ) <= 0 then continue end
 
 			--  save entity
@@ -39,16 +39,19 @@ function guthscpkeycard.load( ply )
 	if not accesses then return false, "file not found or corrupted" end
 
 	--  de-serialize
+	local count = 0
 	for i, v in ipairs( accesses ) do
 		local ent = ents.GetMapCreatedEntity( v.mapID )
 		if not IsValid( ent ) then continue end
 
 		ent:SetNWString( "guthscpkeycard:title", v.title )
 		ent:SetNWInt( "guthscpkeycard:level", v.lvl > 0 and v.lvl or nil ) --  get nil if 0 or lvl
+
+		count = count + 1
 	end
 
-	guthscpkeycard:info( "all keycards have been loaded (%d entities) %s", #accesses, ply and "by " .. ply:Name() or "" )
-	return true, #accesses
+	guthscpkeycard:info( "all keycards have been loaded (%d entities) %s", count, ply and "by " .. ply:Name() or "" )
+	return true, count
 end
 hook.Add( "PostCleanupMap", "guthscpkeycard:load", function()
 	guthscpkeycard.load()
