@@ -5,7 +5,7 @@ SWEP.Base = "guthscp_keycard_base"
 
 --  main informations
 SWEP.PrintName = "SCP - Keycard LVL 4"
-SWEP.Category = "guthscp"
+SWEP.Category = "GuthSCP"
 SWEP.Author	= "Guthen"
 SWEP.Instructions = "You have clearance level four."
 
