@@ -118,7 +118,7 @@ if CLIENT then
 			
 			--  draw additional info
 			if text_info then
-				draw.SimpleText( text_info, "Trebuchet22", x, y + 30, color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+				draw.SimpleText( text_info, "DermaDefaultBold", x, y + 30, color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 			end
 		else
 			draw.SimpleText( "Target: none", "Trebuchet24", x, y, color_red, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
