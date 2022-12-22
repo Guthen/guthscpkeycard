@@ -1,5 +1,4 @@
 local guthscpkeycard = guthscp.modules.guthscpkeycard
-local config = guthscp.configs.guthscpkeycard
 
 
 --  auto-filled variables
