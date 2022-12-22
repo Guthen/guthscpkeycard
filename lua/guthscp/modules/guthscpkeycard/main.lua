@@ -53,6 +53,7 @@ MODULE.menu = {
 				default = {
 					["func_button"] = true,
 					["class C_BaseEntity"] = true,
+					["func_rot_button"] = true,
 				},
 				value = function( v, k )
 					if isnumber( k ) then
