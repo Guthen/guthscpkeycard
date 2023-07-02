@@ -125,6 +125,7 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Deploy()
+	self:SetHoldType( self.HoldType )
 	self:SendWeaponAnim( ACT_VM_DRAW )
 end
 
