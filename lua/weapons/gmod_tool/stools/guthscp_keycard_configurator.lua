@@ -131,7 +131,7 @@ function TOOL:LeftClick( tr )
 	local ply = self:GetOwner()
 	
 	--  check compatible entity
-	local ent = tr.Entity  --  TOOL's TraceResult don't care about world entities
+	local ent = tr.Entity
 	if not IsValid( ent ) or not config.keycard_available_classes[ent:GetClass()] then return false end
 	
 	if SERVER then
