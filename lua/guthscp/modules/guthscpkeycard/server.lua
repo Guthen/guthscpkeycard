@@ -30,7 +30,7 @@ function guthscpkeycard.save( ply )
 	--  save to file
 	guthscp.data.save_to_json( guthscpkeycard.path, data, true )
 
-	guthscpkeycard:info( "all keycards have been saved (%d entities) %s", #data, ply and "by " .. ply:Name() or "" )
+	guthscpkeycard:info( "all keycards have been saved (%d entities) %s", #data, IsValid( ply ) and "by " .. ply:Name() or "" )
 	return true, #data
 end
 
@@ -50,7 +50,7 @@ function guthscpkeycard.load( ply )
 		count = count + 1
 	end
 
-	guthscpkeycard:info( "all keycards have been loaded (%d entities) %s", count, ply and "by " .. ply:Name() or "" )
+	guthscpkeycard:info( "all keycards have been loaded (%d entities) %s", count, IsValid( ply ) and "by " .. ply:Name() or "" )
 	return true, count
 end
 hook.Add( "PostCleanupMap", "guthscpkeycard:load", function()

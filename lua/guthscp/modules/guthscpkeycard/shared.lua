@@ -63,7 +63,7 @@ concommand.Add( "guthscp_keycards_save", function( ply )
 		return
 	end
 
-	guthscp.save()
+	guthscpkeycard.save()
 end )
 
 concommand.Add( "guthscp_keycards_load", function( ply )
@@ -74,5 +74,5 @@ concommand.Add( "guthscp_keycards_load", function( ply )
 		return
 	end
 
-	guthscp.load()
+	guthscpkeycard.load()
 end )
