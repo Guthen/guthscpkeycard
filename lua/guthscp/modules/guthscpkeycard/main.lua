@@ -48,20 +48,14 @@ MODULE.menu = {
 			{
 				type = "TextEntry[]",
 				name = "Keycard Available Classes",
-				id ="keycard_available_classes",
+				id = "keycard_available_classes",
 				desc = "Set of entity classes which an accreditation level can be set. You should avoid touching it. Moreover, the game classes are not synced properly, for instance, a 'func_button' entity can return a 'class C_BaseEntity' client-side (which is the only reason why it's in this list by default). Furthermore, the game's raycast can NOT return the same entity server & client sides, for example, looking at a door will return a 'func_door' entity client-side but a 'prop_dynamic' entity server-side.\nThat's why you shouldn't lose your time with this option.",
 				default = {
 					["func_button"] = true,
 					["class C_BaseEntity"] = true,
 					["func_rot_button"] = true,
 				},
-				value = function( v, k )
-					if isnumber( k ) then
-						return v
-					end
-
-					return k
-				end,
+				is_set = true,
 			},
 			--  translations
 			{
@@ -111,11 +105,6 @@ MODULE.menu = {
 			guthscp.config.create_apply_button(),
 			guthscp.config.create_reset_button(),
 		},
-		parse = function( form )
-			if #form.keycard_available_classes > 0 then
-				form.keycard_available_classes = guthscp.table.create_set( form.keycard_available_classes )
-			end
-		end,
 	},
 	--  details
 	details = {
