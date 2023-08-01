@@ -19,10 +19,7 @@ MODULE.menu = {
 	--  config
 	config = {
 		form = {
-			{
-				type = "Category",
-				name = "General",
-			},
+			"General",
 			{
 				type = "CheckBox",
 				name = "Droppable Keycards",
@@ -58,10 +55,7 @@ MODULE.menu = {
 				is_set = true,
 			},
 			--  translations
-			{
-				type = "Category",
-				name = "Translations",
-			},
+			"Translations",
 			{
 				type = "TextEntry",
 				name = "Accepted",
@@ -84,10 +78,7 @@ MODULE.menu = {
 				default = "You need a keycard LVL {level} to trigger the doors !",
 			},
 			--  sounds
-			{
-				type = "Category",
-				name = "Sounds",
-			},
+			"Sounds",
 			{
 				type = "TextEntry",
 				name = "Accepted",
