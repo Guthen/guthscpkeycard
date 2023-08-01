@@ -21,21 +21,21 @@ MODULE.menu = {
 		form = {
 			"General",
 			{
-				type = "CheckBox",
+				type = "Bool",
 				name = "Droppable Keycards",
 				id = "droppable_keycards",
 				desc = "If checked, keycards can be dropped with a right click while holding them",
 				default = true,
 			},
 			{
-				type = "CheckBox",
+				type = "Bool",
 				name = "Use only Selected Keycard",
 				id = "use_only_selected_keycard",
 				desc = "If checked, only the selected keycard weapon is used. Otherwise, the selected keycard will still be used in priority but, if any, the higher keycard in the inventory will be used.",
 				default = true,
 			},
 			{
-				type = "NumWang",
+				type = "Number",
 				name = "Use Cooldown",
 				id = "use_cooldown",
 				desc = "Cooldown in seconds before being able to use an accredidated door/button again",
@@ -43,7 +43,7 @@ MODULE.menu = {
 				decimals = 2,
 			},
 			{
-				type = "TextEntry[]",
+				type = "String[]",
 				name = "Keycard Available Classes",
 				id = "keycard_available_classes",
 				desc = "Set of entity classes which an accreditation level can be set. You should avoid touching it. Moreover, the game classes are not synced properly, for instance, a 'func_button' entity can return a 'class C_BaseEntity' client-side (which is the only reason why it's in this list by default). Furthermore, the game's raycast can NOT return the same entity server & client sides, for example, looking at a door will return a 'func_door' entity client-side but a 'prop_dynamic' entity server-side.\nThat's why you shouldn't lose your time with this option.",
@@ -57,21 +57,21 @@ MODULE.menu = {
 			--  translations
 			"Translations",
 			{
-				type = "TextEntry",
+				type = "String",
 				name = "Accepted",
 				id = "translation_accepted",
 				desc = "Text shown to the player whose access was accepted",
 				default = "The doors are moving!",
 			},
 			{
-				type = "TextEntry",
+				type = "String",
 				name = "No Keycard",
 				id = "translation_no_keycard",
 				desc = "Text shown to the player whose access was denied because he doesn't have a keycard",
 				default = "You don't have any keycard to pass !",
 			},
 			{
-				type = "TextEntry",
+				type = "String",
 				name = "Insufficient Clearance",
 				id = "translation_insufficient_clearance",
 				desc = "Text shown to the player whose access was denied because he doesn't have a sufficient clearance keycard. Available arguments: '{level}'",
@@ -80,14 +80,14 @@ MODULE.menu = {
 			--  sounds
 			"Sounds",
 			{
-				type = "TextEntry",
+				type = "String",
 				name = "Accepted",
 				id ="sound_accepted",
 				desc = "Sound played on the player whose access was accepted",
 				default = "guthen_scp/interact/KeycardUse1.ogg",
 			},
 			{
-				type = "TextEntry",
+				type = "String",
 				name = "Denied",
 				id = "sound_denied",
 				desc = "Sound played on the player whose access was denied",
