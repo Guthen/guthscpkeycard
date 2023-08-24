@@ -114,7 +114,7 @@ function SWEP:Reload()
     access_slider:Dock( TOP )
     access_slider:DockMargin( left_margin, 0, 0, 0 )
     access_slider:SetText( "Accreditation ID:" )
-    access_slider:SetMinMax( 1, GuthSCP.maxKeycardLevel )
+    access_slider:SetMinMax( 0, GuthSCP.maxKeycardLevel )
     access_slider:SetDecimals( 0 )
     access_slider:SetValue( ply:GetNWInt( "GuthSCP:CurAccess", 1 ) )
 

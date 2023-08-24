@@ -98,8 +98,8 @@ hook.Add( "PlayerUse", "GuthSCP:PlayerUse", function( ply, ent )
     if not GuthSCP.keycardAvailableClass[ent:GetClass()] then return end  --  it is a keycard compatible entity class?
     if ply.guthscp_last_use_time and ply.guthscp_last_use_time > CurTime() then return false end  --  check cooldown
 
-    local ent_level = ent:GetNWInt( "GuthSCP:LVL", 0 )
-    if ent_level <= 0 then return end  --  no level :(
+    local ent_level = ent:GetNWInt( "GuthSCP:LVL", -1 )
+    if ent_level <= -1 then return end  --  no level :(
 
     --  get player accreditation
     local weapon = ply:GetActiveWeapon()
@@ -151,7 +151,7 @@ net.Receive( "GuthSCP:SetConfig", function( len, ply )
     if not title and not access then return end
 
     ply:SetNWString( "GuthSCP:ButtonTitle", title or ply:GetNWString( "GuthSCP:ButtonTitle", "" ) )
-    ply:SetNWInt( "GuthSCP:CurAccess", math.Clamp( access or ply:GetNWInt( "GuthSCP:CurAccess", 1 ), 1, GuthSCP.maxKeycardLevel ) )
+    ply:SetNWInt( "GuthSCP:CurAccess", math.Clamp( access or ply:GetNWInt( "GuthSCP:CurAccess", 1 ), 0, GuthSCP.maxKeycardLevel ) )
 
     --  set level to configurator
     local weapon = ply:GetWeapon( "guthscp_keycards_config" )
