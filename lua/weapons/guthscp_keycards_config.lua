@@ -180,9 +180,7 @@ function SWEP:DrawHUD()
     if not GuthSCP.keycardAvailableClass[ trg:GetClass() ] then return end
 
     draw.SimpleText( "Target Class: " .. trg:GetClass() or "nil", "DermaDefault", ScrW() / 2 + 50, ScrH() / 2 + 15, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
-    if trg:GetNWInt( "GuthSCP:LVL", 0 ) then
-        draw.SimpleText( "Target LVL: " .. trg:GetNWInt( "GuthSCP:LVL", 0 ), "DermaDefault", ScrW() / 2 + 50, ScrH() / 2 + 30, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
-    end
+    draw.SimpleText( "Target LVL: " .. trg:GetNWInt( "GuthSCP:LVL", -1 ), "DermaDefault", ScrW() / 2 + 50, ScrH() / 2 + 30, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
 end
 
 GuthSCP.registerKeycardSWEP( SWEP, 5 )
