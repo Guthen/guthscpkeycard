@@ -3,8 +3,8 @@ local config = guthscp.configs.guthscpkeycard
 
 
 --  draw door infos
-local convar = CreateClientConVar( "guthscp_hud_lvl", "1", nil, nil, "Whenever you want to see the LVL of the door you're looking at on your screen" )
 local dist_sqr = 156 ^ 2
+local convar = CreateClientConVar( "guthscp_keycard_level_hud_enabled", "1", nil, nil, "Whenever you want to see the LVL of the door you're looking at on your screen" )
 hook.Add( "HUDPaint", "guthscpkeycard:door_infos", function()
 	if not convar:GetBool() then return end
 
