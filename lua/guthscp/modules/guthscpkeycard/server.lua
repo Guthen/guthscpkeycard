@@ -5,19 +5,29 @@ local config = guthscp.configs.guthscpkeycard
 util.AddNetworkString( "guthscpkeycard:config" )
 util.AddNetworkString( "guthscpkeycard:io" )
 
+function guthscpkeycard.set_entity_level( ent, level )
+	ent:SetNWInt( "guthscpkeycard:level", level )
+end
+
+function guthscpkeycard.set_entity_title( ent, title )
+	ent:SetNWString( "guthscpkeycard:title", title )
+end
+
+
 --  functions
 function guthscpkeycard.save( ply )
 	--  serialize
 	local data = {}
 	for class in pairs( config.keycard_available_classes ) do
-		for i, v in ipairs( ents.FindByClass( class ) ) do -- add data to a table
-			if v:GetNWInt( "guthscpkeycard:level", 0 ) <= 0 then continue end
+		for i, ent in ipairs( ents.FindByClass( class ) ) do -- add data to a table
+			local level = guthscpkeycard.get_entity_level( ent )
+			if level < 0 then continue end
 
 			--  save entity
 			data[#data + 1] = { 
-				mapID = v:MapCreationID(), 
-				lvl = v:GetNWInt( "guthscpkeycard:level", 0 ),
-				title = v:GetNWString( "guthscpkeycard:title", nil ),
+				mapID = ent:MapCreationID(), 
+				lvl = level,
+				title = guthscpkeycard.get_entity_title( ent ),
 			}
 		end
 	end
@@ -44,9 +54,9 @@ function guthscpkeycard.load( ply )
 		local ent = ents.GetMapCreatedEntity( v.mapID )
 		if not IsValid( ent ) then continue end
 
-		ent:SetNWString( "guthscpkeycard:title", v.title )
-		ent:SetNWInt( "guthscpkeycard:level", v.lvl > 0 and v.lvl or nil ) --  get nil if 0 or lvl
-
+		guthscpkeycard.set_entity_level( ent, v.lvl )
+		guthscpkeycard.set_entity_title( ent, v.title )
+		
 		count = count + 1
 	end
 
@@ -93,8 +103,8 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 	if ply.guthscp_last_use_time and ply.guthscp_last_use_time > CurTime() then return false end  --  check cooldown
 
 	--  check entity level
-	local ent_level = ent:GetNWInt( "guthscpkeycard:level", 0 )
-	if ent_level <= 0 then return end  --  no level :(
+	local ent_level = guthscpkeycard.get_entity_level( ent )
+	if ent_level < 0 then return end  --  no level :(
 
 	--  get active weapon
 	local active_weapon = ply:GetActiveWeapon()

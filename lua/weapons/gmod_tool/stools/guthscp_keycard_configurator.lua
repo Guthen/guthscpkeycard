@@ -59,7 +59,7 @@ if CLIENT then
 		cpanel:AddControl( "Slider", { 
 			Label = "#tool.guthscp_keycard_configurator.level", 
 			Command = "guthscp_keycard_configurator_level", 
-			Min = 1, 
+			Min = 0, 
 			Max = guthscp.modules.guthscpkeycard.max_keycard_level 
 		} )
 		--  title
@@ -137,9 +137,9 @@ function TOOL:LeftClick( tr )
 	if SERVER then
 		--  setup data
 		local level, title = self:GetClientNumber( "level", 1 ), self:GetClientInfo( "title" )
-		ent:SetNWInt( "guthscpkeycard:level", level )
-		ent:SetNWString( "guthscpkeycard:title", title )
-	
+		guthscpkeycard.set_entity_level( ent, level )
+		guthscpkeycard.set_entity_title( ent, title )
+
 		--  notify
 		ply:ChatPrint( "The looked entity has been set on LVL " .. level )
 	end
@@ -157,8 +157,8 @@ function TOOL:RightClick( tr )
 
 	if SERVER then
 		--  erase data
-		ent:SetNWInt( "guthscpkeycard:level", 0 )
-		ent:SetNWString( "guthscpkeycard:title", "" )
+		guthscpkeycard.set_entity_level( ent, 0 )
+		guthscpkeycard.set_entity_title( ent, "" )
 
 		--  notify
 		ply:ChatPrint( "The looked entity's data has been erased!" )
@@ -178,8 +178,8 @@ function TOOL:Reload( tr )
 
 	if CLIENT then
 		--  get data
-		local level = ent:GetNWInt( "guthscpkeycard:level", 0 )
-		local title = ent:GetNWString( "guthscpkeycard:title", "" )
+		local level = guthscpkeycard.get_entity_level( ent )
+		local title = guthscpkeycard.get_entity_title( ent )
 
 		--  apply data
 		GetConVar( self:GetMode() .. "_level" ):SetInt( level )

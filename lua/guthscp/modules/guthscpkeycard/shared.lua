@@ -22,7 +22,7 @@ function guthscpkeycard.register_keycard_swep( swep, level )
 	end
 
 	--  add to spawnmenu
-	if CLIENT and guthscp then
+	if CLIENT then
 		guthscp.spawnmenu.add_weapon( swep, "Keycards" )
 	end
 
@@ -40,6 +40,14 @@ function guthscpkeycard.register_keycard_swep( swep, level )
 			end
 		end )
 	end
+end
+
+function guthscpkeycard.get_entity_level( ent )
+	return ent:GetNWInt( "guthscpkeycard:level", -1 )
+end
+
+function guthscpkeycard.get_entity_title( ent )
+	return ent:GetNWString( "guthscpkeycard:title", "" )
 end
 
 --  holst weapon when animation is finished
