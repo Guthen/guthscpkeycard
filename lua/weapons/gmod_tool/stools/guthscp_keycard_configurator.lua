@@ -86,12 +86,7 @@ if CLIENT then
 	local color_red = Color( 255, 0, 0 )
 	function TOOL:DrawHUD()
 		local x, y = ScrW() / 2, ScrH() * .75
-
-		--  get tool trace
-		local tr = util.GetPlayerTrace( LocalPlayer() )
-		tr.mask = toolmask
-		local trace = util.TraceLine( tr )
-		local ent = trace.Entity
+		local ent = LocalPlayer():GetUseEntity()
 
 		if IsValid( ent ) then
 			local text_info = nil
@@ -152,12 +147,12 @@ function TOOL:RightClick( tr )
 	local ply = self:GetOwner()
 
 	--  check compatible entity
-	local ent = ply:GetEyeTrace().Entity
+	local ent = ply:GetUseEntity()
 	if not IsValid( ent ) or not config.keycard_available_classes[ent:GetClass()] then return false end
 
 	if SERVER then
 		--  erase data
-		guthscpkeycard.set_entity_level( ent, 0 )
+		guthscpkeycard.set_entity_level( ent, -1 )
 		guthscpkeycard.set_entity_title( ent, "" )
 
 		--  notify
@@ -173,7 +168,7 @@ function TOOL:Reload( tr )
 	if not IsFirstTimePredicted() then return true end
 
 	--  check compatible entity
-	local ent = ply:GetEyeTrace().Entity
+	local ent = ply:GetUseEntity()
 	if not IsValid( ent ) or not config.keycard_available_classes[ent:GetClass()] then return false end
 
 	if CLIENT then
