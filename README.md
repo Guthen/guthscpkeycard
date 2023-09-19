@@ -1,35 +1,38 @@
-# [SCP] Keycard System
+# [GuthSCP] Keycard
+
 ## Steam Workshop
-![Steam Views](https://img.shields.io/steam/views/1781514401?color=red&style=for-the-badge)
-![Steam Downloads](https://img.shields.io/steam/downloads/1781514401?color=red&style=for-the-badge)
-![Steam Favorites](https://img.shields.io/steam/favorites/1781514401?color=red&style=for-the-badge)
+![Steam Views](https://img.shields.io/steam/views/3034740776?color=red&style=for-the-badge)
+![Steam Downloads](https://img.shields.io/steam/downloads/3034740776?color=red&style=for-the-badge)
+![Steam Favorites](https://img.shields.io/steam/favorites/3034740776?color=red&style=for-the-badge)
 
-This addon is available on the Workshop [here](https://steamcommunity.com/sharedfiles/filedetails/?id=1781514401)!
+This addon is available on the Workshop [here](https://steamcommunity.com/sharedfiles/filedetails/?id=3034740776)!
 
-## Description
-There are **8 weapons** including **6 keycards** (LVL 1, 2, 3, 4, 5 and Omni), **1 keycard editor** and a **Credit Card** (Master Card).
+## Features
++ Containing **7 SWEPs** including **6 keycards** (levels 1, 2, 3, 4, 5 and Omni) and a Master Card (absolutely useless)
++ **Restrict certains areas** of your map for specific accreditations
++ **Keycard Configurator** tool to set levels on buttons across the map
++ Keycards data is **automatically loaded** on **start-up** or after **a map cleanup**
++ Configurable in-game with [[GuthSCP] Base](https://steamcommunity.com/sharedfiles/filedetails/?id=3034737316) (`guthscp_menu` in your console)
+    + **Custom Behaviours**: dropping keycards with RMB, auto-use highest keycard in inventory
+    + **Translations** texts
+    + **Sound** paths
+    + *and more..*
++ **Requires a Sandbox-based gamemode** (e.g. Sandbox, DarkRP) for tool use 
 
-With the **keycard editor**, you can change the current settings by pressing **Reload** key (basically 'R'), a panel will open on your screen. 
+## Commands
++ `guthscp_keycards_save` (server & client): Save the map data to a file, you must **save after setting up accreditations to make the changes persistent**
++ `guthscp_keycards_load` (server & client): Load the map data from a file, not needed since it's already loaded automatically
 
-### Console Commands
-+ `guthscp_keycards_save` : to save the data after edit the buttons with the keycard editor
-+ `guthscp_keycards_load` : to load the data (but it is done automatically, so ignore it)
-
-The keycards data is loaded when a server reboot and after a cleanup.
-
-### Console Variables
-• `guthen_scp_keycard_secondary_drop` (`1`: true, `0`: false) : Enables the keycard's SWEPs to be dropped on right click
-
-### Additionnal modules
-• [[SCP] Hacking Device by zgredinzyyy](https://steamcommunity.com/sharedfiles/filedetails/?id=2019852698)
+## Extra Add-ons
+• ~~[[SCP] Hacking Device by zgredinzyyy](https://steamcommunity.com/sharedfiles/filedetails/?id=2019852698)~~ *(not compatible yet)*
 
 ## Known Issues
-### "I can't open the Settings Menu with the Keycard Editor!"
-In **singleplayer game**, you won't be able to open the configuration panel with Reload key, start a multiplayer game instead (2 players or more)
 ### "I can open an accredidated door without a keycard!" 
-Some addons ─ which use the **PlayerUse** hook ─ disable my addon. This [Piano](https://steamcommunity.com/sharedfiles/filedetails/?id=796397853) addon is known to disable it, remove it.
+Some addons ─ which use the **PlayerUse** hook poorly ─ conflict with my addon. This [Piano](https://steamcommunity.com/sharedfiles/filedetails/?id=796397853) addon is one of those, enable the work-around `Fix 'Playable Piano' conflicting the 'PlayerUse' hook` in the `Base` configuration page (`guthscp_menu` in your game's console).
 
 ## Legal Terms
 This addon is licensed under [Creative Commons Sharealike 3.0](https://creativecommons.org/licenses/by-sa/3.0/) and is based on content of [SCP Foundation](http://scp-wiki.wikidot.com/) and [SCP:Containment Breach](https://www.scpcbgame.com/).
 
-If you create something derived from this, **please credit me** (you can also tell me about what you've done).
+If you create something derived from this, please credit me (you can also tell me about what you've done).
+
+***Enjoy !***
