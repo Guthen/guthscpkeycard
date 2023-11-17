@@ -111,9 +111,9 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 	if not IsValid( active_weapon ) then return end
 	
 	--  get weapon level
-	local ply_level = 0
+	local ply_level = -1
 	local weapon = NULL
-	if not active_weapon.GuthSCPLVL or active_weapon.GuthSCPLVL == 0 then
+	if not active_weapon.GuthSCPLVL then
 		if not config.use_only_selected_keycard then
 			--  get higher level in inventory
 			for i, v in ipairs( ply:GetWeapons() ) do
@@ -138,7 +138,7 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 	end
 	
 	--  refuse access
-	if ply_level == 0 then
+	if ply_level == -1 then
 		--  not a level weapon
 		ply:EmitSound( config.sound_denied )
 		guthscp.player_message( ply, config.translation_no_keycard )
