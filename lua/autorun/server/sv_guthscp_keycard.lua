@@ -59,7 +59,7 @@ function GuthSCP.load( ply )
         if not IsValid( ent ) then continue end
 
         ent:SetNWString( "GuthSCP:Title", v.title )
-        ent:SetNWInt( "GuthSCP:LVL", v.lvl > 0 and v.lvl or nil ) --  get nil if 0 or lvl
+        ent:SetNWInt( "GuthSCP:LVL", v.lvl )
     end
 
     print( ( "GuthSCP - All Keycards have been loaded (%d entities) %s" ):format( #accesses, ply and "by " .. ply:Name() or "" ) )
