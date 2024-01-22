@@ -93,8 +93,6 @@ MODULE.menu = {
 				desc = "Sound played on the player whose access was denied",
 				default = "guthen_scp/interact/KeycardUse2.ogg",
 			},
-			guthscp.config.create_apply_button(),
-			guthscp.config.create_reset_button(),
 		},
 	},
 	--  details
