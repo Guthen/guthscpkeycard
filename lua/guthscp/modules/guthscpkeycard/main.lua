@@ -1,7 +1,7 @@
 local MODULE = {
 	name = "Keycard",
 	author = "Guthen",
-	version = "2.0.0-beta",
+	version = "2.0.1",
 	description = [[Control the accesses of the facility through accreditation keycards.]],
 	icon = "icon16/vcard.png",
 	version_url = "https://raw.githubusercontent.com/Guthen/guthscpkeycard/update-to-guthscpbase-remaster/lua/guthscp/modules/guthscpkeycard/main.lua",
@@ -140,6 +140,15 @@ function MODULE:init()
 	if file.Exists( path, "DATA" ) then 
 		guthscp.data.move_file( path, self.path )
 	end
+
+	--  warn for old version
+	timer.Simple( 0, function()
+		if GuthSCP.registerKeycardSWEP then
+			local text = "The old version of this addon is currently running on this server. Please, delete the '[SCP] Keycard System by Guthen' addon to avoid any possible conflicts."
+			self:add_error( text )
+			self:error( text )
+		end
+	end )
 end
 
 guthscp.module.hot_reload( "guthscpkeycard" )
