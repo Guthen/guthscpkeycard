@@ -1,3 +1,5 @@
+if not guthscp then return end
+
 --  base
 SWEP.Base = "guthscp_keycard_base"
 
@@ -12,7 +14,7 @@ SWEP.Spawnable = true
 local instructions = {
     "Yay, free money! wait.. do you have the password?",
     "I wonder if this card works with SCP-294..",
-    "Do you really think money is usefull in this facility?",
+    "Do you really think money is useful in this facility?",
     "Money can't directly open doors, are you mad to keep this?",
 }
 
@@ -73,3 +75,8 @@ SWEP.GuthSCPRenderer = {
         }, ]]
     },
 }
+
+--  add to spawnmenu
+if CLIENT and guthscp then
+    guthscp.spawnmenu.add_weapon( SWEP, "Keycards" )
+end

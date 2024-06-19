@@ -1,3 +1,8 @@
+if not guthscp then
+	error( "guthscpkeycard - fatal error! https://github.com/Guthen/guthscpbase must be installed on the server!" )
+	return
+end
+
 SWEP.PrintName = "SCP - Keycard Base"
 SWEP.Category = "GuthSCP"
 SWEP.Author	= "Guthen"
@@ -87,7 +92,7 @@ SWEP.ViewModelBoneMods = {
 function SWEP:PrimaryAttack() 
 	if CLIENT then return end
 	
-	self:SetNextPrimaryFire( CurTime() + GuthSCP.useCooldown )
+	self:SetNextPrimaryFire( CurTime() + guthscp.configs.guthscpkeycard.use_cooldown )
 
 	--  interact with entities (+use)
 	if SERVER then
@@ -102,10 +107,7 @@ function SWEP:PrimaryAttack()
 	end
 end
 
-local convar_drop
 if SERVER then
-	convar_drop = CreateConVar( "guthen_scp_keycard_secondary_drop", "1", { FCVAR_ARCHIVE, FCVAR_LUA_SERVER }, "Enables the keycard's SWEPs to be dropped on right click" )
-
 	--  setup correct model & skin of dropped entity using /drop 
 	hook.Add( "onDarkRPWeaponDropped", "guthscpkeycard:dropmodel", function( ply, ent, weapon )
 		if not ( weapon.Base == "guthscp_keycard_base" ) then return end
@@ -119,7 +121,7 @@ function SWEP:SecondaryAttack()
 	if CLIENT then return end
 	
 	--  drop weapon
-	if convar_drop:GetBool() then
+	if guthscp.configs.guthscpkeycard.droppable_keycards then
 		self:GetOwner():DropWeapon()
 	end
 end
@@ -130,13 +132,9 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster( new_weapon )
-	if self.ViewModel == "models/weapons/c_grenade.mdl" then  --  don't engage animation on default keycards
-		self:ClearBonePositions()
-		return true 
-	end
-	if self.HolstingDone then  --  holsting once animation done
+	if self.ViewModel == "models/weapons/v_grenade.mdl" then return true end --  don't engage animation on default keycards
+	if self.HolstingDone then --  holsting once animation done
 		self.HolstingDone = false
-		self:ClearBonePositions()
 		return true 
 	end
 	if self.HolstingTime > CurTime() then return false end --  don't holster while animation playing
@@ -147,14 +145,6 @@ function SWEP:Holster( new_weapon )
 
 	self:ClearBonePositions()
 	return false
-end
-
-function SWEP:OwnerChanged()
-	if CLIENT then
-		if self:IsCarriedByLocalPlayer() then
-			self:ClearBonePositions()
-		end
-	end
 end
 
 if CLIENT then
@@ -255,7 +245,7 @@ function SWEP:Initialize()
 	if not ( self.GuthSCPRenderer.view_model.use_hands == nil ) then
 		self.UseHands = self.GuthSCPRenderer.view_model.use_hands
 	end
-	
+
 	--  world model
 	if self.GuthSCPRenderer.world_model.swep_ck.enabled then
 		table.Merge( self.WElements["keycard"], self.GuthSCPRenderer.world_model.swep_ck or {} )
@@ -278,20 +268,38 @@ function SWEP:Initialize()
 		self.ViewModelBoneMods = table_FullCopy( self.ViewModelBoneMods )
 
 		// init view model bone build function
-		self:ClearBonePositions()
+		if IsValid( self:GetOwner() ) then
+			local vm = self:GetOwner():GetViewModel()
+			if IsValid( vm ) then
+				self:ResetBonePositions( vm )
+
+				// Init viewmodel visibility
+				if ( self.ShowViewModel == nil or self.ShowViewModel ) then
+					vm:SetColor( color_white )
+				else
+					// we set the alpha to 1 instead of 0 because else ViewModelDrawn stops being called
+					vm:SetColor( Color( 255, 255, 255, 1 ) )
+					// ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
+					// however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
+					vm:SetMaterial( "Debug/hsv" )
+				end
+			end
+		end
+
 	end
 end
 
+function SWEP:OnRemove()
+	self:ClearBonePositions()
+end
+
 function SWEP:ClearBonePositions()
-	if not CLIENT then return end
-
-	local ply = LocalPlayer()
-	if not IsValid( ply ) then return end
-
-	local vm = ply:GetViewModel()
-	if not IsValid( vm ) then return end
-	
-	self:ResetBonePositions( vm )
+	if CLIENT and IsValid( self:GetOwner() ) then
+		local vm = self:GetOwner():GetViewModel()
+		if IsValid( vm ) then
+			self:ResetBonePositions( vm )
+		end
+	end
 end
 
 if CLIENT then

@@ -1,3 +1,5 @@
+if not guthscp then return end
+
 --  base
 SWEP.Base = "guthscp_keycard_base"
 
@@ -62,4 +64,4 @@ SWEP.GuthSCPRenderer = {
 }
 
 --  register swep
-GuthSCP.registerKeycardSWEP( SWEP )
+guthscp.modules.guthscpkeycard.register_keycard_swep( SWEP )
