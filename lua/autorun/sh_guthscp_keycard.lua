@@ -1,5 +1,17 @@
 --  this addon is made from my unfinished gamemode scpsitebreach : https://github.com/Guthen/SCP-Site-Breach
 
+--  warn for new version
+local message = "[IMPORTANT] You are using an old version of Guthen's SCP Keycard addon, please consider upgrading to the new version. You can find the new addons in this collection: https://steamcommunity.com/sharedfiles/filedetails/?id=3034749707"
+MsgC( Color( 255, 0, 0 ), message, "\n" )
+if CLIENT then 
+    hook.Add( "InitPostEntity", "GuthSCP:NewKeycardVersion", function()
+        timer.Simple( 5, function() 
+            if not LocalPlayer():IsAdmin() then return end
+            chat.AddText( Color( 161, 154, 255), message )
+        end )
+    end )
+end
+
 GuthSCP = GuthSCP or {}
 
 --  entity class which we can set lvl
