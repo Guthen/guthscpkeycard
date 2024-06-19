@@ -4,7 +4,7 @@ local MODULE = {
 	version = "2.0.1",
 	description = [[Control the accesses of the facility through accreditation keycards.]],
 	icon = "icon16/vcard.png",
-	version_url = "https://raw.githubusercontent.com/Guthen/guthscpkeycard/update-to-guthscpbase-remaster/lua/guthscp/modules/guthscpkeycard/main.lua",
+	version_url = "https://raw.githubusercontent.com/Guthen/guthscpkeycard/master/lua/guthscp/modules/guthscpkeycard/main.lua",
 	dependencies = {
 		base = "2.0.0",
 	},
