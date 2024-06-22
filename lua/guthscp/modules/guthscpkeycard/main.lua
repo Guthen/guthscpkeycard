@@ -75,14 +75,14 @@ MODULE.menu = {
 				name = "No Keycard",
 				id = "translation_no_keycard",
 				desc = "Text shown to the player whose access was denied because he doesn't have a keycard",
-				default = "You don't have any keycard to pass !",
+				default = "You don't have any keycard to pass!",
 			},
 			{
 				type = "String",
 				name = "Insufficient Clearance",
 				id = "translation_insufficient_clearance",
 				desc = "Text shown to the player whose access was denied because he doesn't have a sufficient clearance keycard. Available arguments: '{level}'",
-				default = "You need a keycard LVL {level} to trigger the doors !",
+				default = "You need a keycard LVL {level} to trigger the doors!",
 			},
 			--  sounds
 			"Sounds",
