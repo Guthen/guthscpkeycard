@@ -84,6 +84,13 @@ MODULE.menu = {
 				desc = "Text shown to the player whose access was denied because he doesn't have a sufficient clearance keycard. Available arguments: '{level}'",
 				default = "You need a keycard LVL {level} to trigger the doors!",
 			},
+			{
+				type = "String",
+				name = "HUD Level",
+				id = "translation_hud_level",
+				desc = "Text shown when hovering the cursor on a door access. Available arguments: '{level}'",
+				default = "LEVEL: {level}",
+			},
 			--  sounds
 			"Sounds",
 			{
