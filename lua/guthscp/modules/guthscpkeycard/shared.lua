@@ -52,6 +52,8 @@ end
 
 --  holst weapon when animation is finished
 hook.Add( "StartCommand", "guthscpkeycard:holst_animated_weapon", function( ply, ucmd )
+	if not guthscp.configs.guthscpkeycard.custom_holster_system then return end
+
 	local weapon = ply:GetActiveWeapon()
 	if not IsValid( weapon ) or not ( weapon.Base == "guthscp_keycard_base" ) then return end
 	if not IsValid( weapon.HolstingWeapon ) or weapon.HolstingTime == 0 or weapon.HolstingTime > CurTime() then return end 

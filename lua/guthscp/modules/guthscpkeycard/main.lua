@@ -35,6 +35,13 @@ MODULE.menu = {
 				default = true,
 			},
 			{
+				type = "Bool",
+				name = "Custom Holster System",
+				id = "custom_holster_system",
+				desc = "If checked, the custom holstering system is enabled. When switching weapons from keycards, it'll play their holster animations (if possible) and wait for the animation to finish before switching to the next weapon. Disabling it may resolve problems where the keycards can NOT be switched from.",
+				default = true,
+			},
+			{
 				type = "Number",
 				name = "Use Cooldown",
 				id = "use_cooldown",

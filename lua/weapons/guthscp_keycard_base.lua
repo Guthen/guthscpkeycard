@@ -132,6 +132,8 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster( new_weapon )
+	if not guthscp.configs.guthscpkeycard.custom_holster_system then return true end
+
 	if self.ViewModel == "models/weapons/v_grenade.mdl" then return true end --  don't engage animation on default keycards
 	if self.HolstingDone then --  holsting once animation done
 		self.HolstingDone = false
