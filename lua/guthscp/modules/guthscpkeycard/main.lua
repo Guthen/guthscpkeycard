@@ -6,7 +6,7 @@ local MODULE = {
 	icon = "icon16/vcard.png",
 	version_url = "https://raw.githubusercontent.com/Guthen/guthscpkeycard/master/lua/guthscp/modules/guthscpkeycard/main.lua",
 	dependencies = {
-		base = "2.0.0",
+		base = "2.2.0",
 	},
 	requires = {
 		["shared.lua"] = guthscp.REALMS.SHARED,
