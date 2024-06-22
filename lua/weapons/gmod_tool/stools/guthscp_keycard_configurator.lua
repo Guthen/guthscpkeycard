@@ -4,7 +4,7 @@ local guthscpkeycard = guthscp.modules.guthscpkeycard
 local config = guthscp.configs.guthscpkeycard
 
 
-TOOL.Category = "guthscp"
+TOOL.Category = "GuthSCP"
 TOOL.Name = "#tool.guthscp_keycard_configurator.name"
 
 TOOL.ClientConVar = {

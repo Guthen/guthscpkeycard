@@ -1,7 +1,7 @@
 local MODULE = {
 	name = "Keycard",
 	author = "Guthen",
-	version = "2.1.0",
+	version = "2.1.1",
 	description = [[Control the accesses of the facility through accreditation keycards.]],
 	icon = "icon16/vcard.png",
 	version_url = "https://raw.githubusercontent.com/Guthen/guthscpkeycard/master/lua/guthscp/modules/guthscpkeycard/main.lua",
