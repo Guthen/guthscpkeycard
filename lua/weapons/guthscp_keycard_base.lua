@@ -45,42 +45,38 @@ SWEP.HolstingTime = 0
 --  swep construction kit
 local model = "models/props/scp/keycard/keycard.mdl"
 SWEP.VElements = {
-	["keycard"] = { 
-		type = "Model", 
-		model = model, 
-		bone = "ValveBiped.Bip01_R_Finger0", 
-		rel = "", 
+	["keycard"] = {
+		type = "Model",
+		model = model,
+		bone = "ValveBiped.Bip01_R_Finger0",
+		rel = "",
 
-		--  here is what you want to edit
-		pos = Vector(4, -1, -0.519), 
-		angle = Angle(-8.183, -10.52, -99.351), 
-		size = Vector(0.625, 0.625, 0.625), 
-		--  end of will
+		pos = Vector( 4, -1, -0.519 ),
+		angle = Angle( -8.183, -10.52, -99.351 ),
+		size = Vector( 0.625, 0.625, 0.625 ),
 
-		color = Color(255, 255, 255, 255), 
-		surpresslightning = false, 
-		material = "", 
-		skin = 4, 
+		color = Color( 255, 255, 255, 255 ),
+		surpresslightning = false,
+		material = "",
+		skin = 4,
 		bodygroup = {}
 	}
 }
 SWEP.WElements = {
 	["keycard"] = {
-		type = "Model", 
-		model = model, 
-		bone = "ValveBiped.Bip01_R_Hand", 
-		rel = "", 
+		type = "Model",
+		model = model,
+		bone = "ValveBiped.Bip01_R_Hand",
+		rel = "",
 
-		--  here is what you want to edit
-		pos = Vector( 4.5, 4, -1.558 ), 
-		angle = Angle( -3.507, -92.338, -59.611 ), 
-		size = Vector( 0.755, 0.755, 0.755 ), 
-		--  end of will
+		pos = Vector( 4.5, 4, -1.558 ),
+		angle = Angle( -3.507, -92.338, -59.611 ),
+		size = Vector( 0.755, 0.755, 0.755 ),
 
-		color = Color( 255, 255, 255, 255 ), 
-		surpresslightning = false, 
-		material = "", 
-		skin = 4, 
+		color = Color( 255, 255, 255, 255 ),
+		surpresslightning = false,
+		material = "",
+		skin = 4,
 		bodygroup = {}
 	}
 }
@@ -89,9 +85,9 @@ SWEP.ViewModelBoneMods = {
 }
 
 --  main functions
-function SWEP:PrimaryAttack() 
+function SWEP:PrimaryAttack()
 	if CLIENT then return end
-	
+
 	self:SetNextPrimaryFire( CurTime() + guthscp.configs.guthscpkeycard.use_cooldown )
 
 	--  interact with entities (+use)
@@ -110,8 +106,8 @@ end
 if SERVER then
 	--  setup correct model & skin of dropped entity using /drop 
 	hook.Add( "onDarkRPWeaponDropped", "guthscpkeycard:dropmodel", function( ply, ent, weapon )
-		if not ( weapon.Base == "guthscp_keycard_base" ) then return end
-		
+		if weapon.Base ~= "guthscp_keycard_base" then return end
+
 		ent:SetModel( weapon.GuthSCPRenderer.world_model.model )
 		ent:SetSkin( weapon.GuthSCPRenderer.world_model.skin )
 	end )
@@ -119,7 +115,7 @@ end
 
 function SWEP:SecondaryAttack()
 	if CLIENT then return end
-	
+
 	--  drop weapon
 	if guthscp.configs.guthscpkeycard.droppable_keycards then
 		self:GetOwner():DropWeapon()
@@ -137,7 +133,7 @@ function SWEP:Holster( new_weapon )
 	if self.ViewModel == "models/weapons/v_grenade.mdl" then return true end --  don't engage animation on default keycards
 	if self.HolstingDone then --  holsting once animation done
 		self.HolstingDone = false
-		return true 
+		return true
 	end
 	if self.HolstingTime > CurTime() then return false end --  don't holster while animation playing
 
@@ -225,15 +221,15 @@ function SWEP:Initialize()
 
 	--  skin
 	self:SetSkin( self.GuthSCPRenderer.world_model.skin )
-	
+
 	--  view model
 	if self.GuthSCPRenderer.view_model.swep_ck.enabled then
 		table.Merge( self.VElements["keycard"], self.GuthSCPRenderer.view_model.swep_ck or {} )
-		
+
 		--  auto-skin
 		self.VElements["keycard"].skin = self.GuthSCPRenderer.view_model.skin or self.VElements["keycard"].skin or self.GuthSCPLVL - 1
 		self.VElements["keycard"].model = self.GuthSCPRenderer.view_model.model or self.VElements["keycard"].skin
-		
+
 		--  SWEP:CK code
 		if CLIENT then
 			self.VElements = table_FullCopy( self.VElements )
@@ -244,18 +240,18 @@ function SWEP:Initialize()
 	end
 
 	--  hands
-	if not ( self.GuthSCPRenderer.view_model.use_hands == nil ) then
+	if self.GuthSCPRenderer.view_model.use_hands ~= nil then
 		self.UseHands = self.GuthSCPRenderer.view_model.use_hands
 	end
 
 	--  world model
 	if self.GuthSCPRenderer.world_model.swep_ck.enabled then
 		table.Merge( self.WElements["keycard"], self.GuthSCPRenderer.world_model.swep_ck or {} )
-		
+
 		--  auto-skin
 		self.WElements["keycard"].skin = self.GuthSCPRenderer.world_model.skin or self.WElements["keycard"].skin or self.GuthSCPLVL - 1
 		self.WElements["keycard"].model = self.GuthSCPRenderer.world_model.model or self.VElements["keycard"].skin
-		
+
 		--  SWEP:CK code
 		if CLIENT then
 			self.WElements = table_FullCopy( self.WElements )
@@ -264,7 +260,7 @@ function SWEP:Initialize()
 	else
 		self.WorldModel = self.GuthSCPRenderer.world_model.model
 	end
-	
+
 	if CLIENT then
 		if not self.GuthSCPRenderer.world_model.swep_ck.enabled and not self.GuthSCPRenderer.view_model.swep_ck.enabled then return end
 		self.ViewModelBoneMods = table_FullCopy( self.ViewModelBoneMods )
@@ -413,7 +409,7 @@ if CLIENT then
 
 	SWEP.wRenderOrder = nil
 	function SWEP:DrawWorldModel( flags )
-		if not self.GuthSCPRenderer.world_model.swep_ck.enabled then 
+		if not self.GuthSCPRenderer.world_model.swep_ck.enabled then
 			self:DrawModel( flags )
 			return
 		end

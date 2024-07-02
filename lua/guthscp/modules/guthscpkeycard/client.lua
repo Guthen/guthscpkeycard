@@ -21,12 +21,12 @@ hook.Add( "HUDPaint", "guthscpkeycard:door_infos", function()
 
 	--  draw title & level
 	draw.SimpleText( guthscpkeycard.get_entity_title( ent ), "DermaDefaultBold", ScrW() / 2, ScrH() / 2 - 20, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
-	
-	local level_text = guthscp.helpers.format_message( 
-		config.translation_hud_level, 
+
+	local level_text = guthscp.helpers.format_message(
+		config.translation_hud_level,
 		{
 			level = level,
-		} 
+		}
 	)
 	draw.SimpleText( level_text, "DermaDefault", ScrW() / 2, ScrH() / 2, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
 end )

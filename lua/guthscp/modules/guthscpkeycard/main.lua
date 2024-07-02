@@ -96,7 +96,7 @@ MODULE.menu = {
 			{
 				type = "String",
 				name = "Accepted",
-				id ="sound_accepted",
+				id = "sound_accepted",
 				desc = "Sound played on the player whose access was accepted",
 				default = "guthen_scp/interact/KeycardUse1.ogg",
 			},
@@ -146,12 +146,12 @@ MODULE.menu = {
 }
 
 function MODULE:init()
-	self.path = self.id .. "/" .. game.GetMap() .. ".json"
+	local map_name = game.GetMap()
+	self.path = self.id .. "/" .. map_name .. ".json"
 
 	--  porting old save file 
-	local map_name = game.GetMap()
 	local path = "guth_scp/" .. map_name .. "/keycards.txt"
-	if file.Exists( path, "DATA" ) then 
+	if file.Exists( path, "DATA" ) then
 		guthscp.data.move_file( path, self.path )
 	end
 

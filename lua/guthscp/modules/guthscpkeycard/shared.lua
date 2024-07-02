@@ -55,8 +55,8 @@ hook.Add( "StartCommand", "guthscpkeycard:holst_animated_weapon", function( ply,
 	if not guthscp.configs.guthscpkeycard.custom_holster_system then return end
 
 	local weapon = ply:GetActiveWeapon()
-	if not IsValid( weapon ) or not ( weapon.Base == "guthscp_keycard_base" ) then return end
-	if not IsValid( weapon.HolstingWeapon ) or weapon.HolstingTime == 0 or weapon.HolstingTime > CurTime() then return end 
+	if not IsValid( weapon ) or weapon.Base ~= "guthscp_keycard_base" then return end
+	if not IsValid( weapon.HolstingWeapon ) or weapon.HolstingTime == 0 or weapon.HolstingTime > CurTime() then return end
 
 	weapon.HolstingDone = true
 	weapon.HolstingTime = 0
@@ -66,7 +66,7 @@ end )
 
 --  concommands
 concommand.Add( "guthscp_keycards_save", function( ply )
-	if CLIENT then 
+	if CLIENT then
 		net.Start( "guthscpkeycard:io" )
 			net.WriteBool( true )
 		net.SendToServer()
@@ -77,7 +77,7 @@ concommand.Add( "guthscp_keycards_save", function( ply )
 end )
 
 concommand.Add( "guthscp_keycards_load", function( ply )
-	if CLIENT then 
+	if CLIENT then
 		net.Start( "guthscpkeycard:io" )
 			net.WriteBool( false )
 		net.SendToServer()

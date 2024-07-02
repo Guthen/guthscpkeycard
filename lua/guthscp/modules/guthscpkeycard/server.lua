@@ -24,17 +24,17 @@ function guthscpkeycard.save( ply )
 			if level < 0 then continue end
 
 			--  save entity
-			data[#data + 1] = { 
-				mapID = ent:MapCreationID(), 
+			data[#data + 1] = {
+				mapID = ent:MapCreationID(),
 				lvl = level,
 				title = guthscpkeycard.get_entity_title( ent ),
 			}
 		end
 	end
-	
+
 	--  check data
-	if #data == 0 then 
-		return false, "keycards accesses not found" 
+	if #data == 0 then
+		return false, "keycards accesses not found"
 	end
 
 	--  save to file
@@ -56,7 +56,7 @@ function guthscpkeycard.load( ply )
 
 		guthscpkeycard.set_entity_level( ent, v.lvl )
 		guthscpkeycard.set_entity_title( ent, v.title )
-		
+
 		count = count + 1
 	end
 
@@ -71,23 +71,23 @@ hook.Add( "InitPostEntity", "guthscpkeycard:load", function()
 end )
 
 net.Receive( "guthscpkeycard:io", function( len, ply )
-	if not ply:IsSuperAdmin() then 
+	if not ply:IsSuperAdmin() then
 		ply:ChatPrint( "You are not allowed to either load or save keycards. (superadmin access needed)" )
-		return MODULE:warning( "%q is not allowed to load or save keycards", ply:GetName() ) 
+		return MODULE:warning( "%q is not allowed to load or save keycards", ply:GetName() )
 	end
 
 	local is_save = net.ReadBool()
 	if is_save then
 		--  save to file
-		local success, message = guthscpkeycard.save( ply ) 
+		local success, message = guthscpkeycard.save( ply )
 		if success then
 			ply:ChatPrint( ( "You successfully saved %d keycards accesses to file." ):format( message ) )
 		else
 			ply:ChatPrint( "You failed to save keycards : " .. message )
 		end
-	else 
+	else
 		--  load from file
-		local success, message = guthscpkeycard.load( ply ) 
+		local success, message = guthscpkeycard.load( ply )
 		if success then
 			ply:ChatPrint( ( "You successfully load %d keycards accesses from file." ):format( message ) )
 		else
@@ -109,7 +109,7 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 	--  get active weapon
 	local active_weapon = ply:GetActiveWeapon()
 	if not IsValid( active_weapon ) then return end
-	
+
 	--  get weapon level
 	local ply_level = -1
 	local weapon = NULL
@@ -118,7 +118,7 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 			--  get higher level in inventory
 			for i, v in ipairs( ply:GetWeapons() ) do
 				if not v.GuthSCPLVL or ply_level >= v.GuthSCPLVL then continue end
-				
+
 				weapon = v
 				ply_level = v.GuthSCPLVL
 			end
@@ -128,15 +128,15 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 		weapon = active_weapon
 		ply_level = weapon.GuthSCPLVL
 	end
-	
+
 	--  set cooldown
 	ply.guthscp_last_use_time = CurTime() + config.use_cooldown
-	
+
 	--  play weapon animation
 	if weapon == active_weapon and weapon.Base == "guthscp_keycard_base" then
 		weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	end
-	
+
 	--  refuse access
 	if ply_level == -1 then
 		--  not a level weapon
@@ -147,14 +147,14 @@ hook.Add( "PlayerUse", "guthscpkeycard:access", function( ply, ent )
 	elseif ply_level < ent_level then
 		--  no suffisant clearance
 		ply:EmitSound( config.sound_denied )
-		guthscp.player_message( 
-			ply, 
-			guthscp.helpers.format_message( 
-				config.translation_insufficient_clearance, 
+		guthscp.player_message(
+			ply,
+			guthscp.helpers.format_message(
+				config.translation_insufficient_clearance,
 				{
 					level = ent_level,
-				} 
-			) 
+				}
+			)
 		)
 
 		return false
