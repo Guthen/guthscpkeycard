@@ -94,7 +94,7 @@ if CLIENT then
 
 			--  alert from FPP prohibition 
 			if FPP and not FPP.canTouchEnt( ent, "Toolgun" ) then
-				text_info = "Falco's Prop Protection prevent you from editing this entity, please enable 'Admins can use tool on blocked entities' in its 'Toolgun options'!"
+				text_info = "Falco's Prop Protection prevent you from editing this entity, please ensure both 'Admins can use tool on world/blocked entities' are enabled in the 'Toolgun options'!"
 			end
 			
 			--  alert from unused class
