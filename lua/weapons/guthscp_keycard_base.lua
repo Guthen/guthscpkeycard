@@ -133,6 +133,7 @@ function SWEP:Holster( new_weapon )
 	if not guthscp.configs.guthscpkeycard.custom_holster_system then return true end
 
 	if self.ViewModel == "models/weapons/c_grenade.mdl" then return true end --  don't engage animation on default keycards
+	if new_weapon == self then return true end --  for unknown reasons, client does call this function by sending the same weapon when the holsting is done
 
 	if self.HolstingDone then --  holsting once animation done
 		self.HolstingDone = false
