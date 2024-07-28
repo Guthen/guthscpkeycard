@@ -128,15 +128,14 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster( new_weapon )
+	self:ClearBonePositions()
+
 	if not guthscp.configs.guthscpkeycard.custom_holster_system then return true end
 
-	if self.ViewModel == "models/weapons/c_grenade.mdl" then  --  don't engage animation on default keycards
-		self:ClearBonePositions()
-		return true
-	end
+	if self.ViewModel == "models/weapons/c_grenade.mdl" then return true end --  don't engage animation on default keycards
+
 	if self.HolstingDone then --  holsting once animation done
 		self.HolstingDone = false
-		self:ClearBonePositions()
 		return true
 	end
 	if self.HolstingTime > CurTime() then return false end --  don't holster while animation playing
@@ -145,7 +144,6 @@ function SWEP:Holster( new_weapon )
 	self.HolstingTime = CurTime() + self:SequenceDuration( self:SelectWeightedSequence( ACT_VM_HOLSTER ) )
 	self.HolstingWeapon = new_weapon
 
-	self:ClearBonePositions()
 	return false
 end
 
