@@ -130,9 +130,13 @@ end
 function SWEP:Holster( new_weapon )
 	if not guthscp.configs.guthscpkeycard.custom_holster_system then return true end
 
-	if self.ViewModel == "models/weapons/v_grenade.mdl" then return true end --  don't engage animation on default keycards
+	if self.ViewModel == "models/weapons/c_grenade.mdl" then  --  don't engage animation on default keycards
+		self:ClearBonePositions()
+		return true
+	end
 	if self.HolstingDone then --  holsting once animation done
 		self.HolstingDone = false
+		self:ClearBonePositions()
 		return true
 	end
 	if self.HolstingTime > CurTime() then return false end --  don't holster while animation playing
@@ -143,6 +147,14 @@ function SWEP:Holster( new_weapon )
 
 	self:ClearBonePositions()
 	return false
+end
+
+function SWEP:OwnerChanged()
+	if not CLIENT then return end
+
+	if self:IsCarriedByLocalPlayer() then
+		self:ClearBonePositions()
+	end
 end
 
 if CLIENT then
@@ -265,39 +277,20 @@ function SWEP:Initialize()
 		if not self.GuthSCPRenderer.world_model.swep_ck.enabled and not self.GuthSCPRenderer.view_model.swep_ck.enabled then return end
 		self.ViewModelBoneMods = table_FullCopy( self.ViewModelBoneMods )
 
-		// init view model bone build function
-		if IsValid( self:GetOwner() ) then
-			local vm = self:GetOwner():GetViewModel()
-			if IsValid( vm ) then
-				self:ResetBonePositions( vm )
-
-				// Init viewmodel visibility
-				if ( self.ShowViewModel == nil or self.ShowViewModel ) then
-					vm:SetColor( color_white )
-				else
-					// we set the alpha to 1 instead of 0 because else ViewModelDrawn stops being called
-					vm:SetColor( Color( 255, 255, 255, 1 ) )
-					// ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
-					// however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
-					vm:SetMaterial( "Debug/hsv" )
-				end
-			end
-		end
-
+		self:ClearBonePositions()
 	end
-end
-
-function SWEP:OnRemove()
-	self:ClearBonePositions()
 end
 
 function SWEP:ClearBonePositions()
-	if CLIENT and IsValid( self:GetOwner() ) then
-		local vm = self:GetOwner():GetViewModel()
-		if IsValid( vm ) then
-			self:ResetBonePositions( vm )
-		end
-	end
+	if not CLIENT then return end
+
+	local ply = LocalPlayer()
+	if not IsValid( ply ) then return end
+
+	local vm = ply:GetViewModel()
+	if not IsValid( vm ) then return end
+
+	self:ResetBonePositions( vm )
 end
 
 if CLIENT then
