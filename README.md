@@ -24,7 +24,7 @@ This addon is available on the Workshop [here](https://steamcommunity.com/shared
 + `guthscp_keycards_load` (server & client): Load the map data from a file, not needed since it's already loaded automatically
 
 ## Extra Add-ons
-• ~~[[SCP] Hacking Device by zgredinzyyy](https://steamcommunity.com/sharedfiles/filedetails/?id=2019852698)~~ *(not compatible yet)*
+• [[GuthSCP] Hacking Device RELOADED by Augaton](https://steamcommunity.com/sharedfiles/filedetails/?id=3302753364) *(previously made by zgredinzyyy)*
 
 ## Known Issues
 ### "I can open an accredidated door without a keycard!" 

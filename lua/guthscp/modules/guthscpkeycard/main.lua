@@ -1,7 +1,7 @@
 local MODULE = {
 	name = "Keycard",
 	author = "Guthen",
-	version = "2.1.4",
+	version = "2.1.5",
 	description = [[Control the accesses of the facility through accreditation keycards.]],
 	icon = "icon16/vcard.png",
 	version_url = "https://raw.githubusercontent.com/Guthen/guthscpkeycard/master/lua/guthscp/modules/guthscpkeycard/main.lua",
@@ -120,6 +120,12 @@ MODULE.menu = {
 			text = "Read Me",
 			icon = "icon16/information.png",
 			url = "https://github.com/Guthen/guthscpkeycard/blob/master/README.md",
+		},
+		"Modules",
+		{
+			text = "Augaton's Hacking Device",
+			icon = "icon16/brick_link.png",
+			url = "https://github.com/Augaton/scp-hacking-device-reloaded",
 		},
 		"Social",
 		{
