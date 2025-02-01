@@ -46,7 +46,7 @@ MODULE.menu = {
 				name = "Use Cooldown",
 				id = "use_cooldown",
 				desc = "Cooldown in seconds before being able to use an accredidated door/button again",
-				default = .8,
+				default = 0.8,
 				decimals = 2,
 			},
 			{
