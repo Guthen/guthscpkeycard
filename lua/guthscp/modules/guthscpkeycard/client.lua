@@ -1,7 +1,6 @@
 local guthscpkeycard = guthscp.modules.guthscpkeycard
 local config = guthscp.configs.guthscpkeycard
 
-
 --  draw door infos
 local convar = CreateClientConVar( "guthscp_keycard_level_hud_enabled", "1", nil, nil, "Whenever you want to see the LVL of the door you're looking at on your screen" )
 hook.Add( "HUDPaint", "guthscpkeycard:door_infos", function()
@@ -12,7 +11,7 @@ hook.Add( "HUDPaint", "guthscpkeycard:door_infos", function()
 	if not IsValid( ply ) or not ply:Alive() then return end
 
 	--  check entity
-	local ent = ply:GetUseEntity()
+	local ent = guthscpkeycard.find_configurable_entity_at_eye( ply )
 	if not IsValid( ent ) then return end
 
 	--  check level

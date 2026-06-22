@@ -85,7 +85,11 @@ if CLIENT then
 	local color_red = Color( 255, 0, 0 )
 	function TOOL:DrawHUD()
 		local x, y = ScrW() / 2, ScrH() * 0.75
-		local ent = LocalPlayer():GetUseEntity()
+		local ent = guthscpkeycard.find_configurable_entity_at_eye( LocalPlayer(), --[[ ignore_distance= ]] true ) 
+
+		if not IsValid( ent ) then
+			ent = LocalPlayer():GetUseEntity()
+		end
 
 		if IsValid( ent ) then
 			local text_info = nil
@@ -125,8 +129,8 @@ function TOOL:LeftClick( tr )
 	local ply = self:GetOwner()
 
 	--  check compatible entity
-	local ent = tr.Entity
-	if not IsValid( ent ) or not config.keycard_available_classes[ent:GetClass()] then return false end
+	local ent = guthscpkeycard.find_configurable_entity_at_eye( ply, --[[ ignore_distance= ]] true )
+	if not IsValid( ent ) then return false end
 
 	if SERVER then
 		--  setup data
@@ -146,8 +150,8 @@ function TOOL:RightClick( tr )
 	local ply = self:GetOwner()
 
 	--  check compatible entity
-	local ent = ply:GetUseEntity()
-	if not IsValid( ent ) or not config.keycard_available_classes[ent:GetClass()] then return false end
+	local ent = guthscpkeycard.find_configurable_entity_at_eye( ply, --[[ ignore_distance= ]] true )
+	if not IsValid( ent ) then return false end
 
 	if SERVER then
 		--  erase data
@@ -167,8 +171,8 @@ function TOOL:Reload( tr )
 	if not IsFirstTimePredicted() then return true end
 
 	--  check compatible entity
-	local ent = ply:GetUseEntity()
-	if not IsValid( ent ) or not config.keycard_available_classes[ent:GetClass()] then return false end
+	local ent = guthscpkeycard.find_configurable_entity_at_eye( ply, --[[ ignore_distance= ]] true )
+	if not IsValid( ent ) then return false end
 
 	if CLIENT then
 		--  get data

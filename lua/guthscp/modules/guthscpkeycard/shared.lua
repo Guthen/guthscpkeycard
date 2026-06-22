@@ -1,5 +1,5 @@
 local guthscpkeycard = guthscp.modules.guthscpkeycard
-
+local config = guthscp.configs.guthscpkeycard
 
 --  auto-filled variables
 guthscpkeycard.keycard_sweps = guthscpkeycard.keycard_sweps or {}
@@ -48,6 +48,25 @@ end
 
 function guthscpkeycard.get_entity_title( ent )
 	return ent:GetNWString( "guthscpkeycard:title", "" )
+end
+
+function guthscpkeycard.find_configurable_entity_at_eye( ply, ignore_distance )
+	local max_dist = 90
+
+	local tr = ply:GetEyeTrace()
+	if not ignore_distance and tr.StartPos:DistToSqr(tr.HitPos) > max_dist * max_dist then
+		return nil
+	end
+
+	local entities = ents.FindInSphere( tr.HitPos, 0.5 )
+
+	for i, ent in ipairs( entities ) do
+		if config.keycard_available_classes[ent:GetClass()] then 
+			return ent
+		end
+	end
+
+	return nil
 end
 
 --  holst weapon when animation is finished
